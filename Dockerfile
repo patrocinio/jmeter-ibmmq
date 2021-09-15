@@ -30,8 +30,11 @@ RUN    apk update \
 # && unzip -oq "/tmp/dependencies/JMeterPlugins-*.zip" -d $JMETER_HOME
 RUN mkdir ${JMETER_HOME}/lib/ibmmq
 COPY lib/ibmmq ${JMETER_HOME}/lib/ibmmq
-RUN echo "user.classpath=../lib/ibmmq" >> ${JMETER_HOME}/bin/user.properties
+RUN echo "user.classpath=lib/ibmmq" >> ${JMETER_HOME}/bin/user.properties
 
+# Copy Test file
+RUN mkdir -p ${JMETER_HOME}/tests/ibmmq
+COPY tests/ibmmq/MQ.jmx tests/ibmmq/clientkey.jks ${JMETER_HOME}/tests/ibmmq
 
 # Set global PATH such that "jmeter" command is found
 ENV PATH $PATH:$JMETER_BIN
@@ -41,6 +44,6 @@ COPY entrypoint.sh /
 
 WORKDIR	${JMETER_HOME}
 
-#ENTRYPOINT ["/entrypoint.sh"]
+ENTRYPOINT ["/entrypoint.sh"]
 
-ENTRYPOINT sleep 3600
+#ENTRYPOINT sleep 3600

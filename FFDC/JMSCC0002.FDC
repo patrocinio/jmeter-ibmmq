@@ -1,0 +1,402 @@
+----------------------------------START FFST------------------------------------
+/Users/edu/github/jmeter-ibmmq/FFDC/JMSCC0002.FDC PID:33
+
+                                    IBM MQ classes for JMS and Java (AllClient packaging) First Failure Symptom Report
+                                            
+
+Product          :- IBM MQ classes for JMS and Java (AllClient packaging)
+Date/Time        :- Wed Sep 15 15:47:19 CEST 2021
+System time      :- 1631713639504
+Operating System :- Linux
+UserID           :- root
+Java Vendor      :- IcedTea
+Java Version     :- 25.275-b01
+
+Source Class     :- com.ibm.mq.jmqi.remote.impl.RemoteTCPConnection
+Source Method    :- getNonFipsSocketFactory()
+ProbeID          :- 03
+Thread           :- name=setUp Thread Group 1-1 priority=5 group=main ccl=org.apache.jmeter.DynamicClassLoader@5d6f64b1
+
+                                      Data
+                                      ----
+
+|   Description        :-  Cannot open keystore file
+|   Exception message  :-  /Users/edu/github/deploy-mq/java-client/clientkey.jks (No such file or directory)
+
+                              Version information
+                              -------------------
+
+IBM MQ JMS Provider
+9.2.3.0
+p923-L210708
+Production
+Component Title: IBM MQ JMS Provider
+Component Name:  com.ibm.msg.client.wmq
+Version:         9.2.3.0
+Class Name:      class com.ibm.msg.client.wmq.factories.WMQComponent
+CMVC:            p923-L210708
+Jar location:    file:/Users/edu/github/jmeter-ibmmq/lib/ibmmq/com.ibm.mq.allclient-9.2.3.0.jar
+Factory Class:   class com.ibm.msg.client.wmq.factories.WMQFactoryFactory
+
+Common Services for Java Platform, Standard Edition
+9.2.3.0
+p923-L210708
+Production
+inPreferenceTo[0]: com.ibm.msg.client.commonservices.j2me
+Component Title:   Common Services for Java Platform, Standard Edition
+Component Name:    com.ibm.msg.client.commonservices.j2se
+Version:           9.2.3.0
+Class Name:        class com.ibm.msg.client.commonservices.j2se.J2SEComponent
+CMVC:              p923-L210708
+Jar location:      file:/Users/edu/github/jmeter-ibmmq/lib/ibmmq/com.ibm.mq.allclient-9.2.3.0.jar
+Factory Class:     class com.ibm.msg.client.commonservices.j2se.CommonServicesImplementation
+
+Java Message Service Client
+9.2.3.0
+p923-L210708
+Production
+Component Title: Java Message Service Client
+Component Name:  com.ibm.msg.client.jms
+Version:         9.2.3.0
+Class Name:      class com.ibm.msg.client.jms.internal.JMSComponent
+CMVC:            p923-L210708
+Jar location:    file:/Users/edu/github/jmeter-ibmmq/lib/ibmmq/com.ibm.mq.allclient-9.2.3.0.jar
+Factory Class:   null
+
+IBM MQ classes for Java Message Service
+9.2.3.0
+p923-L210708
+Production
+Component Title: IBM MQ classes for Java Message Service
+Component Name:  com.ibm.mq.jms
+Version:         9.2.3.0
+Class Name:      class com.ibm.mq.jms.MQJMSComponent
+CMVC:            p923-L210708
+Jar location:    file:/Users/edu/github/jmeter-ibmmq/lib/ibmmq/com.ibm.mq.allclient-9.2.3.0.jar
+Factory Class:   null
+
+IBM MQ classes for Java
+9.2.3.0
+p923-L210708
+Production
+Component Title: IBM MQ classes for Java
+Component Name:  com.ibm.mq
+Version:         9.2.3.0
+Class Name:      class com.ibm.mq.MQJavaComponent
+CMVC:            p923-L210708
+Jar location:    file:/Users/edu/github/jmeter-ibmmq/lib/ibmmq/com.ibm.mq.allclient-9.2.3.0.jar
+Factory Class:   null
+
+
+
+                                  Stack trace
+                                  -----------
+
+Stack trace to show the location of the FFST call
+|   FFST Location  :-  java.lang.Exception
+|   	at com.ibm.msg.client.commonservices.trace.Trace.getCurrentPosition(Trace.java:2152)
+|   	at com.ibm.msg.client.commonservices.trace.Trace.createFFSTString(Trace.java:2059)
+|   	at com.ibm.msg.client.commonservices.trace.Trace.ffstInternal(Trace.java:1943)
+|   	at com.ibm.msg.client.commonservices.trace.Trace.ffst(Trace.java:1745)
+|   	at com.ibm.mq.jmqi.remote.impl.RemoteTCPConnection.getNonFipsSocketFactory(RemoteTCPConnection.java:2888)
+|   	at com.ibm.mq.jmqi.remote.impl.RemoteTCPConnection.chooseSocketFactory(RemoteTCPConnection.java:2650)
+|   	at com.ibm.mq.jmqi.remote.impl.RemoteTCPConnection.makeSocketSecure(RemoteTCPConnection.java:2314)
+|   	at com.ibm.mq.jmqi.remote.impl.RemoteTCPConnection.bindAndConnectSocket(RemoteTCPConnection.java:845)
+|   	at com.ibm.mq.jmqi.remote.impl.RemoteTCPConnection.protocolConnect(RemoteTCPConnection.java:1417)
+|   	at com.ibm.mq.jmqi.remote.impl.RemoteConnection.connect(RemoteConnection.java:995)
+|   	at com.ibm.mq.jmqi.remote.impl.RemoteConnectionSpecification.getNewConnection(RemoteConnectionSpecification.java:572)
+|   	at com.ibm.mq.jmqi.remote.impl.RemoteConnectionSpecification.getSessionFromNewConnection(RemoteConnectionSpecification.java:246)
+|   	at com.ibm.mq.jmqi.remote.impl.RemoteConnectionSpecification.getSession(RemoteConnectionSpecification.java:154)
+|   	at com.ibm.mq.jmqi.remote.impl.RemoteConnectionPool.getSession(RemoteConnectionPool.java:127)
+|   	at com.ibm.mq.jmqi.remote.api.RemoteFAP$Connector.jmqiConnect(RemoteFAP.java:13345)
+|   	at com.ibm.mq.jmqi.remote.api.RemoteFAP$Connector.access$100(RemoteFAP.java:13143)
+|   	at com.ibm.mq.jmqi.remote.api.RemoteFAP.jmqiConnect(RemoteFAP.java:1448)
+|   	at com.ibm.mq.jmqi.remote.api.RemoteFAP.jmqiConnect(RemoteFAP.java:1389)
+|   	at com.ibm.mq.ese.jmqi.InterceptedJmqiImpl.jmqiConnect(InterceptedJmqiImpl.java:377)
+|   	at com.ibm.mq.ese.jmqi.ESEJMQI.jmqiConnect(ESEJMQI.java:562)
+|   	at com.ibm.msg.client.wmq.internal.WMQConnection.<init>(WMQConnection.java:389)
+|   	at com.ibm.msg.client.wmq.factories.WMQConnectionFactory.createV7ProviderConnection(WMQConnectionFactory.java:8683)
+|   	at com.ibm.msg.client.wmq.factories.WMQConnectionFactory.createProviderConnection(WMQConnectionFactory.java:8023)
+|   	at com.ibm.msg.client.jms.admin.JmsConnectionFactoryImpl._createConnection(JmsConnectionFactoryImpl.java:322)
+|   	at com.ibm.msg.client.jms.admin.JmsConnectionFactoryImpl.createConnection(JmsConnectionFactoryImpl.java:242)
+|   	at com.ibm.mq.jms.MQConnectionFactory.createCommonConnection(MQConnectionFactory.java:6026)
+|   	at com.ibm.mq.jms.MQConnectionFactory.createConnection(MQConnectionFactory.java:6086)
+|   	at javax.jms.ConnectionFactory$createConnection.call(Unknown Source)
+|   	at org.codehaus.groovy.runtime.callsite.CallSiteArray.defaultCall(CallSiteArray.java:47)
+|   	at org.codehaus.groovy.runtime.callsite.AbstractCallSite.call(AbstractCallSite.java:125)
+|   	at org.codehaus.groovy.runtime.callsite.AbstractCallSite.call(AbstractCallSite.java:148)
+|   	at Script1.run(Script1.groovy:51)
+|   	at org.codehaus.groovy.jsr223.GroovyScriptEngineImpl.eval(GroovyScriptEngineImpl.java:317)
+|   	at org.codehaus.groovy.jsr223.GroovyCompiledScript.eval(GroovyCompiledScript.java:71)
+|   	at javax.script.CompiledScript.eval(CompiledScript.java:92)
+|   	at org.apache.jmeter.util.JSR223TestElement.processFileOrScript(JSR223TestElement.java:217)
+|   	at org.apache.jmeter.timers.JSR223Timer.delay(JSR223Timer.java:43)
+|   	at org.apache.jmeter.threads.JMeterThread.delay(JMeterThread.java:979)
+|   	at org.apache.jmeter.threads.JMeterThread.executeSamplePackage(JMeterThread.java:554)
+|   	at org.apache.jmeter.threads.JMeterThread.processSampler(JMeterThread.java:489)
+|   	at org.apache.jmeter.threads.JMeterThread.run(JMeterThread.java:256)
+|   	at java.lang.Thread.run(Thread.java:748)
+|   
+
+                            Property Store Contents
+                            -----------------------
+
+All currently set properties
+|   JMeter.NonGui                        :-  true
+|   awt.toolkit                          :-  sun.awt.X11.XToolkit
+|   file.encoding                        :-  UTF-8
+|   file.encoding.pkg                    :-  sun.io
+|   file.separator                       :-  /
+|   java.awt.graphicsenv                 :-  sun.awt.X11GraphicsEnvironment
+|   java.awt.headless                    :-  true
+|   java.awt.printerjob                  :-  sun.print.PSPrinterJob
+|   java.class.path                      :-  /opt/apache-jmeter-5.4/bin/ApacheJMeter.jar:/opt/apache-jmeter-5.4/lib/Saxon-HE-9.9.1-7.jar:/opt/apache-jmeter-5.4/lib/accessors-smart-1.2.jar:/opt/apache-jmeter-5.4/lib/apiguardian-api-1.1.0.jar:/opt/apache-jmeter-5.4/lib/asm-7.3.1.jar:/opt/apache-jmeter-5.4/lib/bsf-2.4.0.jar:/opt/apache-jmeter-5.4/lib/bsh-2.0b6.jar:/opt/apache-jmeter-5.4/lib/bshclient.jar:/opt/apache-jmeter-5.4/lib/caffeine-2.8.0.jar:/opt/apache-jmeter-5.4/lib/checker-qual-2.10.0.jar:/opt/apache-jmeter-5.4/lib/commons-codec-1.14.jar:/opt/apache-jmeter-5.4/lib/commons-collections-3.2.2.jar:/opt/apache-jmeter-5.4/lib/commons-collections4-4.4.jar:/opt/apache-jmeter-5.4/lib/commons-dbcp2-2.8.0.jar:/opt/apache-jmeter-5.4/lib/commons-io-2.7.jar:/opt/apache-jmeter-5.4/lib/commons-jexl-2.1.1.jar:/opt/apache-jmeter-5.4/lib/commons-jexl3-3.1.jar:/opt/apache-jmeter-5.4/lib/commons-lang3-3.11.jar:/opt/apache-jmeter-5.4/lib/commons-logging-1.2.jar:/opt/apache-jmeter-5.4/lib/commons-math3-3.6.1.jar:/opt/apache-jmeter-5.4/lib/commons-net-3.7.jar:/opt/apache-jmeter-5.4/lib/commons-pool2-2.9.0.jar:/opt/apache-jmeter-5.4/lib/commons-text-1.9.jar:/opt/apache-jmeter-5.4/lib/darklaf-core-2.4.10.jar:/opt/apache-jmeter-5.4/lib/darklaf-extensions-rsyntaxarea-0.3.4.jar:/opt/apache-jmeter-5.4/lib/darklaf-macos-2.4.10.jar:/opt/apache-jmeter-5.4/lib/darklaf-native-utils-2.4.10.jar:/opt/apache-jmeter-5.4/lib/darklaf-platform-base-2.4.10.jar:/opt/apache-jmeter-5.4/lib/darklaf-property-loader-2.4.10.jar:/opt/apache-jmeter-5.4/lib/darklaf-theme-2.4.10.jar:/opt/apache-jmeter-5.4/lib/darklaf-utils-2.4.10.jar:/opt/apache-jmeter-5.4/lib/darklaf-windows-2.4.10.jar:/opt/apache-jmeter-5.4/lib/dec-0.1.2.jar:/opt/apache-jmeter-5.4/lib/dnsjava-2.1.9.jar:/opt/apache-jmeter-5.4/lib/error_prone_annotations-2.3.3.jar:/opt/apache-jmeter-5.4/lib/freemarker-2.3.30.jar:/opt/apache-jmeter-5.4/lib/geronimo-jms_1.1_spec-1.1.1.jar:/opt/apache-jmeter-5.4/lib/groovy-3.0.5.jar:/opt/apache-jmeter-5.4/lib/groovy-datetime-3.0.5.jar:/opt/apache-jmeter-5.4/lib/groovy-dateutil-3.0.5.jar:/opt/apache-jmeter-5.4/lib/groovy-jmx-3.0.5.jar:/opt/apache-jmeter-5.4/lib/groovy-json-3.0.5.jar:/opt/apache-jmeter-5.4/lib/groovy-jsr223-3.0.5.jar:/opt/apache-jmeter-5.4/lib/groovy-sql-3.0.5.jar:/opt/apache-jmeter-5.4/lib/groovy-templates-3.0.5.jar:/opt/apache-jmeter-5.4/lib/groovy-xml-3.0.5.jar:/opt/apache-jmeter-5.4/lib/hamcrest-2.2.jar:/opt/apache-jmeter-5.4/lib/hamcrest-core-2.2.jar:/opt/apache-jmeter-5.4/lib/hamcrest-date-2.0.7.jar:/opt/apache-jmeter-5.4/lib/httpasyncclient-4.1.4.jar:/opt/apache-jmeter-5.4/lib/httpclient-4.5.12.jar:/opt/apache-jmeter-5.4/lib/httpcore-4.4.13.jar:/opt/apache-jmeter-5.4/lib/httpcore-nio-4.4.13.jar:/opt/apache-jmeter-5.4/lib/httpmime-4.5.12.jar:/opt/apache-jmeter-5.4/lib/jackson-annotations-2.10.3.jar:/opt/apache-jmeter-5.4/lib/jackson-core-2.10.3.jar:/opt/apache-jmeter-5.4/lib/jackson-databind-2.10.3.jar:/opt/apache-jmeter-5.4/lib/javax.activation-1.2.0.jar:/opt/apache-jmeter-5.4/lib/jcharts-0.7.5.jar:/opt/apache-jmeter-5.4/lib/jcl-over-slf4j-1.7.30.jar:/opt/apache-jmeter-5.4/lib/jmespath-core-0.5.0.jar:/opt/apache-jmeter-5.4/lib/jmespath-jackson-0.5.0.jar:/opt/apache-jmeter-5.4/lib/jna-5.5.0.jar:/opt/apache-jmeter-5.4/lib/jodd-core-5.0.13.jar:/opt/apache-jmeter-5.4/lib/jodd-lagarto-5.0.13.jar:/opt/apache-jmeter-5.4/lib/jodd-log-5.0.13.jar:/opt/apache-jmeter-5.4/lib/jodd-props-5.0.13.jar:/opt/apache-jmeter-5.4/lib/jorphan.jar:/opt/apache-jmeter-5.4/lib/json-path-2.4.0.jar:/opt/apache-jmeter-5.4/lib/json-smart-2.3.jar:/opt/apache-jmeter-5.4/lib/jsoup-1.13.1.jar:/opt/apache-jmeter-5.4/lib/jtidy-r938.jar:/opt/apache-jmeter-5.4/lib/junit-4.13.jar:/opt/apache-jmeter-5.4/lib/jxlayer-3.0.4.jar:/opt/apache-jmeter-5.4/lib/log4j-1.2-api-2.13.3.jar:/opt/apache-jmeter-5.4/lib/log4j-api-2.13.3.jar:/opt/apache-jmeter-5.4/lib/log4j-core-2.13.3.jar:/opt/apache-jmeter-5.4/lib/log4j-slf4j-impl-2.13.3.jar:/opt/apache-jmeter-5.4/lib/mail-1.5.0-b01.jar:/opt/apache-jmeter-5.4/lib/miglayout-core-5.2.jar:/opt/apache-jmeter-5.4/lib/miglayout-swing-5.2.jar:/opt/apache-jmeter-5.4/lib/mongo-java-driver-2.11.3.jar:/opt/apache-jmeter-5.4/lib/neo4j-java-driver-4.2.0.jar:/opt/apache-jmeter-5.4/lib/oro-2.0.8.jar:/opt/apache-jmeter-5.4/lib/ph-commons-9.4.1.jar:/opt/apache-jmeter-5.4/lib/ph-css-6.2.2.jar:/opt/apache-jmeter-5.4/lib/reactive-streams-1.0.3.jar:/opt/apache-jmeter-5.4/lib/rhino-1.7.13.jar:/opt/apache-jmeter-5.4/lib/rsyntaxtextarea-3.1.1.jar:/opt/apache-jmeter-5.4/lib/serializer-2.7.2.jar:/opt/apache-jmeter-5.4/lib/slf4j-api-1.7.30.jar:/opt/apache-jmeter-5.4/lib/svgSalamander-1.1.2.1.jar:/opt/apache-jmeter-5.4/lib/tika-core-1.24.1.jar:/opt/apache-jmeter-5.4/lib/tika-parsers-1.24.1.jar:/opt/apache-jmeter-5.4/lib/xalan-2.7.2.jar:/opt/apache-jmeter-5.4/lib/xercesImpl-2.12.0.jar:/opt/apache-jmeter-5.4/lib/xml-apis-1.4.01.jar:/opt/apache-jmeter-5.4/lib/xmlgraphics-commons-2.3.jar:/opt/apache-jmeter-5.4/lib/xmlpull-1.1.3.1.jar:/opt/apache-jmeter-5.4/lib/xpp3_min-1.1.4c.jar:/opt/apache-jmeter-5.4/lib/xstream-1.4.14.jar:/opt/apache-jmeter-5.4/lib/ext/ApacheJMeter_bolt.jar:/opt/apache-jmeter-5.4/lib/ext/ApacheJMeter_components.jar:/opt/apache-jmeter-5.4/lib/ext/ApacheJMeter_core.jar:/opt/apache-jmeter-5.4/lib/ext/ApacheJMeter_ftp.jar:/opt/apache-jmeter-5.4/lib/ext/ApacheJMeter_functions.jar:/opt/apache-jmeter-5.4/lib/ext/ApacheJMeter_http.jar:/opt/apache-jmeter-5.4/lib/ext/ApacheJMeter_java.jar:/opt/apache-jmeter-5.4/lib/ext/ApacheJMeter_jdbc.jar:/opt/apache-jmeter-5.4/lib/ext/ApacheJMeter_jms.jar:/opt/apache-jmeter-5.4/lib/ext/ApacheJMeter_junit.jar:/opt/apache-jmeter-5.4/lib/ext/ApacheJMeter_ldap.jar:/opt/apache-jmeter-5.4/lib/ext/ApacheJMeter_mail.jar:/opt/apache-jmeter-5.4/lib/ext/ApacheJMeter_mongodb.jar:/opt/apache-jmeter-5.4/lib/ext/ApacheJMeter_native.jar:/opt/apache-jmeter-5.4/lib/ext/ApacheJMeter_tcp.jar:lib/ibmmq:lib/ibmmq/com.ibm.mq.allclient-9.2.3.0.jar:lib/ibmmq/javax.jms-api-2.0.1.jar
+|   java.class.version                   :-  52.0
+|   java.endorsed.dirs                   :-  /usr/lib/jvm/java-1.8-openjdk/jre/lib/endorsed
+|   java.ext.dirs                        :-  /usr/lib/jvm/java-1.8-openjdk/jre/lib/ext:/usr/java/packages/lib/ext
+|   java.home                            :-  /usr/lib/jvm/java-1.8-openjdk/jre
+|   java.io.tmpdir                       :-  /tmp
+|   java.library.path                    :-  /usr/lib/jvm/java-1.8-openjdk/jre/lib/amd64/server:/usr/lib/jvm/java-1.8-openjdk/jre/lib/amd64:/usr/lib/jvm/java-1.8-openjdk/jre/../lib/amd64:/usr/java/packages/lib/amd64:/usr/lib64:/lib64:/lib:/usr/lib
+|   java.runtime.name                    :-  OpenJDK Runtime Environment
+|   java.runtime.version                 :-  1.8.0_275-b01
+|   java.security.egd                    :-  file:/dev/urandom
+|   java.specification.name              :-  Java Platform API Specification
+|   java.specification.vendor            :-  Oracle Corporation
+|   java.specification.version           :-  1.8
+|   java.vendor                          :-  IcedTea
+|   java.vendor.url                      :-  https://icedtea.classpath.org
+|   java.vendor.url.bug                  :-  https://icedtea.classpath.org/bugzilla
+|   java.version                         :-  1.8.0_275
+|   java.vm.info                         :-  mixed mode
+|   java.vm.name                         :-  OpenJDK 64-Bit Server VM
+|   java.vm.specification.name           :-  Java Virtual Machine Specification
+|   java.vm.specification.vendor         :-  Oracle Corporation
+|   java.vm.specification.version        :-  1.8
+|   java.vm.vendor                       :-  IcedTea
+|   java.vm.version                      :-  25.275-b01
+|   jmeter.logfile                       :-  tests/ibmmq/jmeter.log
+|   line.separator                       :-  
+|   
+|   log4j.configurationFile              :-  file:/opt/apache-jmeter-5.4/bin/log4j2.xml
+|   log_level.jmeter                     :-  DEBUG
+|   os.arch                              :-  amd64
+|   os.name                              :-  Linux
+|   os.version                           :-  5.10.25-linuxkit
+|   path.separator                       :-  :
+|   sun.arch.data.model                  :-  64
+|   sun.boot.class.path                  :-  /usr/lib/jvm/java-1.8-openjdk/jre/lib/resources.jar:/usr/lib/jvm/java-1.8-openjdk/jre/lib/rt.jar:/usr/lib/jvm/java-1.8-openjdk/jre/lib/sunrsasign.jar:/usr/lib/jvm/java-1.8-openjdk/jre/lib/jsse.jar:/usr/lib/jvm/java-1.8-openjdk/jre/lib/jce.jar:/usr/lib/jvm/java-1.8-openjdk/jre/lib/charsets.jar:/usr/lib/jvm/java-1.8-openjdk/jre/lib/jfr.jar:/usr/lib/jvm/java-1.8-openjdk/jre/classes
+|   sun.boot.library.path                :-  /usr/lib/jvm/java-1.8-openjdk/jre/lib/amd64
+|   sun.cpu.endian                       :-  little
+|   sun.cpu.isalist                      :-  
+|   sun.font.fontmanager                 :-  sun.awt.X11FontManager
+|   sun.io.unicode.encoding              :-  UnicodeLittle
+|   sun.java.command                     :-  /opt/apache-jmeter-5.4/bin/ApacheJMeter.jar -Dlog_level.jmeter=DEBUG -n -t tests/ibmmq/MQ.jmx -l tests/ibmmq/MQ.jtl -j tests/ibmmq/jmeter.log -e -o tests/ibmmq/report
+|   sun.java.launcher                    :-  SUN_STANDARD
+|   sun.jnu.encoding                     :-  UTF-8
+|   sun.management.compiler              :-  HotSpot 64-Bit Tiered Compilers
+|   sun.net.http.allowRestrictedHeaders  :-  true
+|   sun.os.patch.level                   :-  unknown
+|   user.country                         :-  US
+|   user.dir                             :-  /Users/edu/github/jmeter-ibmmq
+|   user.home                            :-  /root
+|   user.language                        :-  en
+|   user.name                            :-  root
+|   user.region                          :-  EN
+|   user.timezone                        :-  Europe/Amsterdam
+
+                           WorkQueueMananger Contents
+                           --------------------------
+
+|   Current ThreadPool size      :-  0
+|   Maintain ThreadPool size     :-  false
+|   Maximum ThreadPool size      :-  -1
+|   ThreadPool inactive timeout  :-  0
+
+                               Runtime properties
+                               ------------------
+
+|   Available processors         :-  4
+|   Free memory in bytes (now)   :-  236453880
+|   Max memory in bytes          :-  310378496
+|   Total memory in bytes (now)  :-  310378496
+
+                           Component Manager Contents
+                           --------------------------
+
+Common Services Components:
+|   CMVC               :-  p923-L210708
+|   Class Name         :-  class com.ibm.msg.client.commonservices.j2se.J2SEComponent
+|   Component Name     :-  com.ibm.msg.client.commonservices.j2se
+|   Component Title    :-  Common Services for Java Platform, Standard Edition
+|   Factory Class      :-  class com.ibm.msg.client.commonservices.j2se.CommonServicesImplementation
+|   Jar location       :-  file:/Users/edu/github/jmeter-ibmmq/lib/ibmmq/com.ibm.mq.allclient-9.2.3.0.jar
+|   Version            :-  9.2.3.0
+|   inPreferenceTo[0]  :-  com.ibm.msg.client.commonservices.j2me
+
+Messaging Provider Components:
+|   CMVC             :-  p923-L210708
+|   Class Name       :-  class com.ibm.msg.client.wmq.factories.WMQComponent
+|   Component Name   :-  com.ibm.msg.client.wmq
+|   Component Title  :-  IBM MQ JMS Provider
+|   Factory Class    :-  class com.ibm.msg.client.wmq.factories.WMQFactoryFactory
+|   Jar location     :-  file:/Users/edu/github/jmeter-ibmmq/lib/ibmmq/com.ibm.mq.allclient-9.2.3.0.jar
+|   Version          :-  9.2.3.0
+
+
+
+
+                         Provider Specific Information
+                         -----------------------------
+
+Overview of JMS System
+Num. Contexts    : 0
+Num. Connections : 0
+Num. Sessions    : 0
+Num. Consumers   : 0
+Num. Producers   : 0
+
+Detailed JMS System Information
+Contexts      : 
+Connections      : 
+Sessions         : 
+Consumers        : 
+Producers        : 
+
+All Thread Information
+
+                          Name : Timer-0
+                      Priority : 5
+                   ThreadGroup : java.lang.ThreadGroup[name=main,maxpri=10]
+                            ID : 12
+                         State : TIMED_WAITING
+                         Stack : java.lang.Object.wait(Object.java:-2)
+                               : java.util.TimerThread.mainLoop(Timer.java:552)
+                               : java.util.TimerThread.run(Timer.java:505)
+
+                          Name : Reference Handler
+                      Priority : 10
+                   ThreadGroup : java.lang.ThreadGroup[name=system,maxpri=10]
+                            ID : 2
+                         State : WAITING
+                         Stack : java.lang.Object.wait(Object.java:-2)
+                               : java.lang.Object.wait(Object.java:502)
+                               : java.lang.ref.Reference.tryHandlePending(Reference.java:191)
+                               : java.lang.ref.Reference$ReferenceHandler.run(Reference.java:153)
+
+                          Name : DestroyJavaVM
+                      Priority : 5
+                   ThreadGroup : java.lang.ThreadGroup[name=main,maxpri=10]
+                            ID : 16
+                         State : RUNNABLE
+
+                          Name : Finalizer
+                      Priority : 8
+                   ThreadGroup : java.lang.ThreadGroup[name=system,maxpri=10]
+                            ID : 3
+                         State : WAITING
+                         Stack : java.lang.Object.wait(Object.java:-2)
+                               : java.lang.ref.ReferenceQueue.remove(ReferenceQueue.java:144)
+                               : java.lang.ref.ReferenceQueue.remove(ReferenceQueue.java:165)
+                               : java.lang.ref.Finalizer$FinalizerThread.run(Finalizer.java:216)
+
+                          Name : UDP Listener
+                      Priority : 5
+                   ThreadGroup : java.lang.ThreadGroup[name=main,maxpri=10]
+                            ID : 15
+                         State : RUNNABLE
+                         Stack : java.net.PlainDatagramSocketImpl.receive0(PlainDatagramSocketImpl.java:-2)
+                               : java.net.AbstractPlainDatagramSocketImpl.receive(AbstractPlainDatagramSocketImpl.java:143)
+                               : java.net.DatagramSocket.receive(DatagramSocket.java:812)
+                               : org.apache.jmeter.JMeter.waitForSignals(JMeter.java:1469)
+                               : org.apache.jmeter.JMeter.access$200(JMeter.java:123)
+                               : org.apache.jmeter.JMeter$1.run(JMeter.java:1452)
+
+                          Name : Signal Dispatcher
+                      Priority : 9
+                   ThreadGroup : java.lang.ThreadGroup[name=system,maxpri=10]
+                            ID : 5
+                         State : RUNNABLE
+
+                          Name : JMSCCThreadPoolMaster
+                      Priority : 5
+                   ThreadGroup : java.lang.ThreadGroup[name=main,maxpri=10]
+                            ID : 19
+                         State : WAITING
+                         Stack : java.lang.Object.wait(Object.java:-2)
+                               : java.lang.Object.wait(Object.java:502)
+                               : com.ibm.msg.client.commonservices.j2se.workqueue.WorkQueueManagerImplementation$WorkQueueManagerThread.waitForNotification(WorkQueueManagerImplementation.java:672)
+                               : com.ibm.msg.client.commonservices.j2se.workqueue.WorkQueueManagerImplementation$WorkQueueManagerThread.waitForNotification(WorkQueueManagerImplementation.java:641)
+                               : com.ibm.msg.client.commonservices.j2se.workqueue.WorkQueueManagerImplementation$WorkQueueManagerThread.run(WorkQueueManagerImplementation.java:908)
+
+                          Name : setUp Thread Group 1-1
+                      Priority : 5
+                   ThreadGroup : java.lang.ThreadGroup[name=main,maxpri=10]
+                            ID : 18
+                         State : RUNNABLE
+                         Stack : java.lang.Thread.dumpThreads(Thread.java:-2)
+                               : java.lang.Thread.getAllStackTraces(Thread.java:1610)
+                               : com.ibm.msg.client.commonservices.j2se.trace.DefaultTracer.generateThreadInfo(DefaultTracer.java:1442)
+                               : com.ibm.msg.client.commonservices.j2se.trace.DefaultTracer.access$1200(DefaultTracer.java:151)
+                               : com.ibm.msg.client.commonservices.j2se.trace.DefaultTracer$10.run(DefaultTracer.java:1382)
+                               : com.ibm.msg.client.commonservices.j2se.trace.DefaultTracer$10.run(DefaultTracer.java:1306)
+                               : java.security.AccessController.doPrivileged(AccessController.java:-2)
+                               : com.ibm.msg.client.commonservices.j2se.trace.DefaultTracer.ffst(DefaultTracer.java:1306)
+                               : com.ibm.msg.client.commonservices.j2se.wmqsupport.TracerImpl.ffst(TracerImpl.java:176)
+                               : com.ibm.msg.client.commonservices.trace.Trace.ffstInternal(Trace.java:1948)
+                               : com.ibm.msg.client.commonservices.trace.Trace.ffst(Trace.java:1745)
+                               : com.ibm.mq.jmqi.remote.impl.RemoteTCPConnection.getNonFipsSocketFactory(RemoteTCPConnection.java:2888)
+                               : com.ibm.mq.jmqi.remote.impl.RemoteTCPConnection.chooseSocketFactory(RemoteTCPConnection.java:2650)
+                               : com.ibm.mq.jmqi.remote.impl.RemoteTCPConnection.makeSocketSecure(RemoteTCPConnection.java:2314)
+                               : com.ibm.mq.jmqi.remote.impl.RemoteTCPConnection.bindAndConnectSocket(RemoteTCPConnection.java:845)
+                               : com.ibm.mq.jmqi.remote.impl.RemoteTCPConnection.protocolConnect(RemoteTCPConnection.java:1417)
+                               : com.ibm.mq.jmqi.remote.impl.RemoteConnection.connect(RemoteConnection.java:995)
+                               : com.ibm.mq.jmqi.remote.impl.RemoteConnectionSpecification.getNewConnection(RemoteConnectionSpecification.java:572)
+                               : com.ibm.mq.jmqi.remote.impl.RemoteConnectionSpecification.getSessionFromNewConnection(RemoteConnectionSpecification.java:246)
+                               : com.ibm.mq.jmqi.remote.impl.RemoteConnectionSpecification.getSession(RemoteConnectionSpecification.java:154)
+                               : com.ibm.mq.jmqi.remote.impl.RemoteConnectionPool.getSession(RemoteConnectionPool.java:127)
+                               : com.ibm.mq.jmqi.remote.api.RemoteFAP$Connector.jmqiConnect(RemoteFAP.java:13345)
+                               : com.ibm.mq.jmqi.remote.api.RemoteFAP$Connector.access$100(RemoteFAP.java:13143)
+                               : com.ibm.mq.jmqi.remote.api.RemoteFAP.jmqiConnect(RemoteFAP.java:1448)
+                               : com.ibm.mq.jmqi.remote.api.RemoteFAP.jmqiConnect(RemoteFAP.java:1389)
+                               : com.ibm.mq.ese.jmqi.InterceptedJmqiImpl.jmqiConnect(InterceptedJmqiImpl.java:377)
+                               : com.ibm.mq.ese.jmqi.ESEJMQI.jmqiConnect(ESEJMQI.java:562)
+                               : com.ibm.msg.client.wmq.internal.WMQConnection.<init>(WMQConnection.java:389)
+                               : com.ibm.msg.client.wmq.factories.WMQConnectionFactory.createV7ProviderConnection(WMQConnectionFactory.java:8683)
+                               : com.ibm.msg.client.wmq.factories.WMQConnectionFactory.createProviderConnection(WMQConnectionFactory.java:8023)
+                               : com.ibm.msg.client.jms.admin.JmsConnectionFactoryImpl._createConnection(JmsConnectionFactoryImpl.java:322)
+                               : com.ibm.msg.client.jms.admin.JmsConnectionFactoryImpl.createConnection(JmsConnectionFactoryImpl.java:242)
+                               : com.ibm.mq.jms.MQConnectionFactory.createCommonConnection(MQConnectionFactory.java:6026)
+                               : com.ibm.mq.jms.MQConnectionFactory.createConnection(MQConnectionFactory.java:6086)
+                               : javax.jms.ConnectionFactory$createConnection.call(null:-1)
+                               : org.codehaus.groovy.runtime.callsite.CallSiteArray.defaultCall(CallSiteArray.java:47)
+                               : org.codehaus.groovy.runtime.callsite.AbstractCallSite.call(AbstractCallSite.java:125)
+                               : org.codehaus.groovy.runtime.callsite.AbstractCallSite.call(AbstractCallSite.java:148)
+                               : Script1.run(Script1.groovy:51)
+                               : org.codehaus.groovy.jsr223.GroovyScriptEngineImpl.eval(GroovyScriptEngineImpl.java:317)
+                               : org.codehaus.groovy.jsr223.GroovyCompiledScript.eval(GroovyCompiledScript.java:71)
+                               : javax.script.CompiledScript.eval(CompiledScript.java:92)
+                               : org.apache.jmeter.util.JSR223TestElement.processFileOrScript(JSR223TestElement.java:217)
+                               : org.apache.jmeter.timers.JSR223Timer.delay(JSR223Timer.java:43)
+                               : org.apache.jmeter.threads.JMeterThread.delay(JMeterThread.java:979)
+                               : org.apache.jmeter.threads.JMeterThread.executeSamplePackage(JMeterThread.java:554)
+                               : org.apache.jmeter.threads.JMeterThread.processSampler(JMeterThread.java:489)
+                               : org.apache.jmeter.threads.JMeterThread.run(JMeterThread.java:256)
+                               : java.lang.Thread.run(Thread.java:748)
+
+                          Name : StandardJMeterEngine
+                      Priority : 5
+                   ThreadGroup : java.lang.ThreadGroup[name=main,maxpri=10]
+                            ID : 14
+                         State : TIMED_WAITING
+                         Stack : java.lang.Object.wait(Object.java:-2)
+                               : java.lang.Thread.join(Thread.java:1260)
+                               : org.apache.jmeter.threads.ThreadGroup.waitThreadStopped(ThreadGroup.java:522)
+                               : org.apache.jmeter.threads.ThreadGroup$$Lambda$95/1417581780.accept(null:-1)
+                               : java.util.concurrent.ConcurrentHashMap$ValuesView.forEach(ConcurrentHashMap.java:4707)
+                               : org.apache.jmeter.threads.ThreadGroup.waitThreadsStopped(ThreadGroup.java:507)
+                               : org.apache.jmeter.engine.StandardJMeterEngine.waitThreadsStopped(StandardJMeterEngine.java:541)
+                               : org.apache.jmeter.engine.StandardJMeterEngine.run(StandardJMeterEngine.java:424)
+                               : java.lang.Thread.run(Thread.java:748)
+
+First Failure Symptom Report completed at Wed Sep 15 15:47:19 CEST 2021
+------------------------------------END FFST------------------------------------
