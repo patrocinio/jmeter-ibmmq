@@ -35,6 +35,7 @@ RUN echo "user.classpath=lib/ibmmq" >> ${JMETER_HOME}/bin/user.properties
 # Copy Test file
 RUN mkdir -p ${JMETER_HOME}/tests/ibmmq
 COPY tests/ibmmq/MQ.jmx tests/ibmmq/clientkey.jks ${JMETER_HOME}/tests/ibmmq
+COPY run.sh test.sh ${JMETER_HOME}
 
 # Set global PATH such that "jmeter" command is found
 ENV PATH $PATH:$JMETER_BIN
@@ -42,8 +43,10 @@ ENV PATH $PATH:$JMETER_BIN
 # Entrypoint has same signature as "jmeter" command
 COPY entrypoint.sh /
 
+RUN chmod 777 ${JMETER_HOME}
+
 WORKDIR	${JMETER_HOME}
 
-ENTRYPOINT ["/entrypoint.sh"]
-
-#ENTRYPOINT sleep 3600
+#ENTRYPOINT ["/entrypoint.sh"]
+ENTRYPOINT sleep 3600
+#ENTRYPOINT test.sh
