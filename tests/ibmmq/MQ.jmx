@@ -35,7 +35,7 @@
           </elementProp>
           <elementProp name="hostName" elementType="Argument">
             <stringProp name="Argument.name">hostName</stringProp>
-            <stringProp name="Argument.value">secureqm-ibm-mq-qm-mq.patrocinio-684-wdc-ddd93d3a0fef01f6b396b69d343df410-0000.us-east.containers.appdomain.cloud</stringProp>
+            <stringProp name="Argument.value">secureqm-ibm-mq-qm-mq.patrocinio-684-dallas-ddd93d3a0fef01f6b396b69d343df410-0000.us-south.containers.appdomain.cloud</stringProp>
             <stringProp name="Argument.metadata">=</stringProp>
           </elementProp>
           <elementProp name="port" elementType="Argument">
