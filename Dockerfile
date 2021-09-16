@@ -33,9 +33,9 @@ COPY lib/ibmmq ${JMETER_HOME}/lib/ibmmq
 RUN echo "user.classpath=lib/ibmmq" >> ${JMETER_HOME}/bin/user.properties
 
 # Copy Test file
-RUN mkdir -p ${JMETER_HOME}/tests/ibmmq
-RUN chmod -R 777 ${JMETER_HOME}/tests/ibmmq
-COPY tests/ibmmq/MQ.jmx tests/ibmmq/clientkey.jks ${JMETER_HOME}/tests/ibmmq
+#RUN mkdir -p ${JMETER_HOME}/tests/ibmmq
+#RUN chmod -R 777 ${JMETER_HOME}/tests/ibmmq
+#COPY tests/ibmmq/MQ.jmx tests/ibmmq/clientkey.jks ${JMETER_HOME}/tests/ibmmq
 COPY test_kube.sh ${JMETER_HOME}
 
 # Set global PATH such that "jmeter" command is found
