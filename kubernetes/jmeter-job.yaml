@@ -2,8 +2,6 @@ apiVersion: batch/v1
 kind: Job
 metadata:
   name: jmeter
-  labels:
-    app: jmeter
 spec:
   template:
     spec:
@@ -11,5 +9,11 @@ spec:
       - name: jmeter
         image: patrocinio/jmeter:5.4
         imagePullPolicy: Always
-        command: 
+        volumeMounts:
+        - mountPath: "/opt/apache-jmeter-5.4/tests/ibmmq"
+          name: test-pvc
+      volumes:
+      - name: test-pvc
+        persistentVolumeClaim:
+          claimName: jmeter-pvc
       restartPolicy: Never

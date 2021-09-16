@@ -1,0 +1,1 @@
+oc apply -f jmeter-pvc.yaml

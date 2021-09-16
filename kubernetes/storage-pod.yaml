@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: storage-pod
+spec:
+  containers:
+  - name: wait
+    image: alpine:latest
+    command: ["sleep", "30"]
+    volumeMounts:
+    - mountPath: "/opt/apache-jmeter-5.4/tests/ibmmq"
+      name: test-pvc
+  volumes:
+  - name: test-pvc
+    persistentVolumeClaim:
+      claimName: jmeter-pvc
+    
