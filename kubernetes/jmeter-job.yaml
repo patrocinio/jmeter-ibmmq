@@ -9,6 +9,7 @@ spec:
       - name: jmeter
         image: patrocinio/jmeter:5.4
         imagePullPolicy: Always
+#        command: ["/bin/sh", "-ec", "sleep 1000"]
         volumeMounts:
         - mountPath: "/opt/apache-jmeter-5.4/tests/ibmmq"
           name: test-pvc

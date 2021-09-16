@@ -31,6 +31,7 @@ RUN    apk update \
 RUN mkdir ${JMETER_HOME}/lib/ibmmq
 COPY lib/ibmmq ${JMETER_HOME}/lib/ibmmq
 RUN echo "user.classpath=lib/ibmmq" >> ${JMETER_HOME}/bin/user.properties
+RUN echo "jmeter.reportgenerator.temp_dir=/tmp" >> ${JMETER_HOME}/bin/user.properties
 
 # Copy Test file
 #RUN mkdir -p ${JMETER_HOME}/tests/ibmmq
