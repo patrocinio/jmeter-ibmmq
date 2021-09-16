@@ -1,8 +1,4 @@
-oc delete -f storage-pod.yaml
-oc apply -f storage-pod.yaml
-
-echo Waiting for Pod to be ready
-oc wait --for=condition=ready --timeout=300s pod storage-pod
+./deploy-storage-pod.sh
 
 echo Copying files
 oc cp ../tests/ibmmq/MQ.jmx storage-pod:/opt/apache-jmeter-5.4/tests/ibmmq

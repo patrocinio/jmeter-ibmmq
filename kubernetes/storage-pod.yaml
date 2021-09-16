@@ -6,10 +6,11 @@ spec:
   containers:
   - name: wait
     image: alpine:latest
-    command: ["sleep", "30"]
+    command: ["sleep", "3000"]
     volumeMounts:
     - mountPath: "/opt/apache-jmeter-5.4/tests/ibmmq"
       name: test-pvc
+    restartPolicy: Never
   volumes:
   - name: test-pvc
     persistentVolumeClaim:
