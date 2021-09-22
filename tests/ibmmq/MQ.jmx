@@ -25,7 +25,7 @@
           </elementProp>
           <elementProp name="nrThreads" elementType="Argument">
             <stringProp name="Argument.name">nrThreads</stringProp>
-            <stringProp name="Argument.value">1</stringProp>
+            <stringProp name="Argument.value">4</stringProp>
             <stringProp name="Argument.metadata">=</stringProp>
           </elementProp>
           <elementProp name="sampleAtSecond" elementType="Argument">

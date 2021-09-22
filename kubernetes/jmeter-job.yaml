@@ -13,6 +13,13 @@ spec:
         volumeMounts:
         - mountPath: "/opt/apache-jmeter-5.4/tests/ibmmq"
           name: test-pvc
+        resources:
+          requests:
+            memory: 256Mi
+            cpu: 250m
+          limits:
+            memory: 512Mi
+            cpu: 500m
       volumes:
       - name: test-pvc
         persistentVolumeClaim:
