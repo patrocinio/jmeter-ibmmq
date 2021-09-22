@@ -1,11 +1,12 @@
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: jmeter-pvc-ocs
+  name: jmeter-pvc
+  finalizer: null
 spec:
   accessModes:
     - ReadWriteOnce
   resources:
     requests:
-      storage: 1M
+      storage: 4M
   storageClassName: ocs-storagecluster-cephfs

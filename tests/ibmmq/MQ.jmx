@@ -143,6 +143,15 @@ System.getProperties().put(&quot;Session&quot;, sess)
 System.getProperties().put(&quot;Connection&quot;, conn)
 System.getProperties().put(&quot;Destination&quot;, destination)
 
+// Define producer
+def producer = sess.createProducer(destination)
+System.getProperties().put(&quot;Producer&quot;, producer)
+
+// Define consumer
+def consumer = sess.createConsumer(destination)
+System.getProperties().put(&quot;Consumer&quot;, consumer)
+
+
 // 7
 vars.put(&quot;setupDone&quot;, &quot;true&quot;)
 
@@ -211,7 +220,15 @@ if (consumed != produced) {
             <stringProp name="parameters"></stringProp>
             <stringProp name="filename"></stringProp>
             <stringProp name="cacheKey">true</stringProp>
-            <stringProp name="script">// 1
+            <stringProp name="script">// Close producer
+def producer = System.getProperties().get(&quot;Producer&quot;)
+producer.close()
+
+// Close producer
+def consumer = System.getProperties().get(&quot;Consumer&quot;)
+consumer.close()
+
+// 1
 System.getProperties().get(&quot;Session&quot;).close()
 System.getProperties().get(&quot;Connection&quot;).close()
 
@@ -250,12 +267,11 @@ vars.put(&quot;stopDone&quot;, &quot;true&quot;)
           <stringProp name="parameters"></stringProp>
           <stringProp name="script">import java.time.Instant
 
-// 1
+// Retrieve session
 def sess = System.getProperties().get(&quot;Session&quot;)
-def destination = System.getProperties().get(&quot;Destination&quot;)
 
-// 2
-def producer = sess.createProducer(destination)
+// Retrieve producer
+def producer = System.getProperties().get(&quot;Producer&quot;)
 
 // 3
 def rnd = new Random(System.currentTimeMillis())
@@ -271,9 +287,6 @@ def start = Instant.now()
 producer.send(msg)
 
 def stop = Instant.now()
-
-// 6
-producer.close()
 
 // 7
 var latency = stop.toEpochMilli() - start.toEpochMilli()
@@ -325,68 +338,6 @@ props.put(&quot;produced&quot;, &quot;&quot; + produced)
           <stringProp name="throughput">${__jexl2(${sampleAtSecond}*60)}</stringProp>
         </ConstantThroughputTimer>
         <hashTree/>
-        <JSR223Timer guiclass="TestBeanGUI" testclass="JSR223Timer" testname="JSR223 Timer - Consumer" enabled="false">
-          <stringProp name="scriptLanguage">groovy</stringProp>
-          <stringProp name="parameters"></stringProp>
-          <stringProp name="filename"></stringProp>
-          <stringProp name="cacheKey">true</stringProp>
-          <stringProp name="script">import javax.jms.TextMessage
-import javax.jms.BytesMessage
-
-import java.time.LocalDate
-import java.time.LocalTime
-import java.time.Instant
-import java.time.format.DateTimeFormatter
-
-// 1
-def sess = System.getProperties().get(&quot;Session&quot;)
-def destination = System.getProperties().get(&quot;Destination&quot;)
-
-// 2
-def consumer = sess.createConsumer(destination)
-
-def start = Instant.now()
-
-// 3
-def msg = consumer.receive(1000)
-
-def stop = Instant.now()
-
-// 4
-if (msg != null) {
-            // 5
-	if (msg instanceof BytesMessage) {
-		def tmp = msg.asType(BytesMessage)
-		log.debug(&quot;#### Incoming BytesMessage contains &quot; + tmp.getBodyLength() + &quot; bytes&quot;)
-	} else if (msg instanceof TextMessage) {
-		def tmp = msg.asType(TextMessage)
-		log.debug(&quot;#### Incoming TextMessage contains -&gt; &quot; + tmp.getText())
-	} else
-		log.debug(&quot;#### Incoming message has unexpected format!&quot;)
-
-            // 6
-	LocalDate date = LocalDate.parse(msg.getStringProperty(&quot;JMS_IBM_PutDate&quot;),
-					DateTimeFormatter.ofPattern(&quot;uuuuMMdd&quot;))
-	LocalTime time = LocalTime.parse(msg.getStringProperty(&quot;JMS_IBM_PutTime&quot;),
-					DateTimeFormatter.ofPattern(&quot;HHmmssSS&quot;))
-
-	// 7
-            def timestampDetail = String.format(&quot;#### Incoming message was placed in queue @ %s - %s&quot;, date, time)
-	log.info(timestampDetail)
-
-	// 8
-            SampleResult.setResponseData(msg.toString() + &quot;\n\n&quot; + timestampDetail)
-	SampleResult.setDataType( org.apache.jmeter.samplers.SampleResult.TEXT )
-	SampleResult.setLatency( stop.toEpochMilli() - start.toEpochMilli() )
-
-} else {
-	log.info(&quot;#### Nothing to fetch!&quot;)
-}
-
-// 9
-consumer.close()</stringProp>
-        </JSR223Timer>
-        <hashTree/>
         <JSR223Sampler guiclass="TestBeanGUI" testclass="JSR223Sampler" testname="JSR223 Sampler - Consumer" enabled="true">
           <stringProp name="scriptLanguage">groovy</stringProp>
           <stringProp name="parameters"></stringProp>
@@ -400,12 +351,8 @@ import java.time.LocalTime
 import java.time.Instant
 import java.time.format.DateTimeFormatter
 
-// 1
-def sess = System.getProperties().get(&quot;Session&quot;)
-def destination = System.getProperties().get(&quot;Destination&quot;)
-
-// 2
-def consumer = sess.createConsumer(destination)
+// Retrieve consumer
+def consumer = System.getProperties().get(&quot;Consumer&quot;)
 
 def start = Instant.now()
 
@@ -450,8 +397,7 @@ if (msg != null) {
 	log.info(&quot;#### Nothing to fetch!&quot;)
 }
 
-// 9
-consumer.close()</stringProp>
+</stringProp>
         </JSR223Sampler>
         <hashTree/>
       </hashTree>

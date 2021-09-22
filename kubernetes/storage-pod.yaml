@@ -14,5 +14,5 @@ spec:
   volumes:
   - name: test-pvc
     persistentVolumeClaim:
-      claimName: jmeter-pvc-ocs
+      claimName: jmeter-pvc
     
