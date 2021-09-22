@@ -15,13 +15,13 @@ spec:
           name: test-pvc
         resources:
           requests:
-            memory: 256Mi
-            cpu: 250m
-          limits:
-            memory: 512Mi
+            memory: 1Gi
             cpu: 500m
+          limits:
+            memory: 2Gi
+            cpu: 4
       volumes:
       - name: test-pvc
         persistentVolumeClaim:
-          claimName: jmeter-pvc
+          claimName: jmeter-pvc-ocs
       restartPolicy: Never
