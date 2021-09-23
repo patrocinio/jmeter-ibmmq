@@ -25,7 +25,7 @@
           </elementProp>
           <elementProp name="nrThreads" elementType="Argument">
             <stringProp name="Argument.name">nrThreads</stringProp>
-            <stringProp name="Argument.value">1</stringProp>
+            <stringProp name="Argument.value">2</stringProp>
             <stringProp name="Argument.metadata">=</stringProp>
           </elementProp>
           <elementProp name="sampleAtSecond" elementType="Argument">
@@ -129,6 +129,8 @@ System.setProperty(&quot;javax.net.ssl.trustStorePassword&quot;, 	tlsKeystorePwd
 
 // 4
 def conn = cf.createConnection(&quot;app&quot;, &quot;test&quot;)
+
+log.info (&quot;==&gt; Creating session&quot;)
 def sess = conn.createSession(false, Session.AUTO_ACKNOWLEDGE)
 
 // 5
@@ -143,15 +145,6 @@ System.getProperties().put(&quot;Session&quot;, sess)
 System.getProperties().put(&quot;Connection&quot;, conn)
 System.getProperties().put(&quot;Destination&quot;, destination)
 
-// Define producer
-def producer = sess.createProducer(destination)
-System.getProperties().put(&quot;Producer&quot;, producer)
-
-// Define consumer
-def consumer = sess.createConsumer(destination)
-System.getProperties().put(&quot;Consumer&quot;, consumer)
-
-
 // 7
 vars.put(&quot;setupDone&quot;, &quot;true&quot;)
 
@@ -164,8 +157,8 @@ log.info(&quot;#### Start completed!&quot;)
 </stringProp>
           </JSR223Timer>
           <hashTree/>
-          <DebugSampler guiclass="TestBeanGUI" testclass="DebugSampler" testname="Debug setUp" enabled="true">
-            <boolProp name="displayJMeterProperties">true</boolProp>
+          <DebugSampler guiclass="TestBeanGUI" testclass="DebugSampler" testname="Debug Sampler - setUp" enabled="true">
+            <boolProp name="displayJMeterProperties">false</boolProp>
             <boolProp name="displayJMeterVariables">true</boolProp>
             <boolProp name="displaySystemProperties">false</boolProp>
           </DebugSampler>
@@ -220,16 +213,10 @@ if (consumed != produced) {
             <stringProp name="parameters"></stringProp>
             <stringProp name="filename"></stringProp>
             <stringProp name="cacheKey">true</stringProp>
-            <stringProp name="script">// Close producer
-def producer = System.getProperties().get(&quot;Producer&quot;)
-producer.close()
-
-// Close producer
-def consumer = System.getProperties().get(&quot;Consumer&quot;)
-consumer.close()
-
-// 1
+            <stringProp name="script">// 1
 System.getProperties().get(&quot;Session&quot;).close()
+System.getProperties().remove(&quot;Session&quot;)
+
 System.getProperties().get(&quot;Connection&quot;).close()
 
 log.info(&quot;#### Stop completed!&quot;)
@@ -241,6 +228,45 @@ vars.put(&quot;stopDone&quot;, &quot;true&quot;)
           </JSR223Timer>
           <hashTree/>
         </hashTree>
+      </hashTree>
+      <PostThreadGroup guiclass="PostThreadGroupGui" testclass="PostThreadGroup" testname="tearDown Thread Group - Close connections" enabled="true">
+        <stringProp name="ThreadGroup.on_sample_error">continue</stringProp>
+        <elementProp name="ThreadGroup.main_controller" elementType="LoopController" guiclass="LoopControlPanel" testclass="LoopController" testname="Loop Controller" enabled="true">
+          <boolProp name="LoopController.continue_forever">false</boolProp>
+          <stringProp name="LoopController.loops">1</stringProp>
+        </elementProp>
+        <stringProp name="ThreadGroup.num_threads">${nrThreads}</stringProp>
+        <stringProp name="ThreadGroup.ramp_time">1</stringProp>
+        <boolProp name="ThreadGroup.scheduler">false</boolProp>
+        <stringProp name="ThreadGroup.duration"></stringProp>
+        <stringProp name="ThreadGroup.delay"></stringProp>
+        <boolProp name="ThreadGroup.same_user_on_next_iteration">true</boolProp>
+      </PostThreadGroup>
+      <hashTree>
+        <JSR223Sampler guiclass="TestBeanGUI" testclass="JSR223Sampler" testname="Close connections" enabled="true">
+          <stringProp name="scriptLanguage">groovy</stringProp>
+          <stringProp name="parameters"></stringProp>
+          <stringProp name="filename"></stringProp>
+          <stringProp name="cacheKey">true</stringProp>
+          <stringProp name="script">def threadno = ctx.getThreadNum()
+log.info (&quot;Thread #: &quot; + threadno)
+
+// Retrieve producer
+def producer = System.getProperties().get(&quot;Producer-&quot; + threadno)
+
+log.info (&quot;==&gt; Producer: &quot; + producer)
+producer.close()
+System.getProperties().remove(&quot;Producer-&quot; + threadno)
+
+// Retrieve consumer
+def consumer = System.getProperties().get(&quot;Consumer-&quot; + threadno)
+
+log.info (&quot;==&gt; Consumer: &quot; + consumer)
+consumer.close()
+System.getProperties().remove(&quot;Consumer-&quot; + threadno)
+</stringProp>
+        </JSR223Sampler>
+        <hashTree/>
       </hashTree>
       <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="Thread Group - Producer" enabled="true">
         <stringProp name="ThreadGroup.on_sample_error">stoptestnow</stringProp>
@@ -261,7 +287,7 @@ vars.put(&quot;stopDone&quot;, &quot;true&quot;)
           <stringProp name="throughput">${__jexl2(${sampleAtSecond}*60)}</stringProp>
         </ConstantThroughputTimer>
         <hashTree/>
-        <JSR223Sampler guiclass="TestBeanGUI" testclass="JSR223Sampler" testname="JSR223 Sampler - Producer" enabled="true">
+        <JSR223Sampler guiclass="TestBeanGUI" testclass="JSR223Sampler" testname="Producer" enabled="true">
           <stringProp name="cacheKey">true</stringProp>
           <stringProp name="filename"></stringProp>
           <stringProp name="parameters"></stringProp>
@@ -270,8 +296,23 @@ vars.put(&quot;stopDone&quot;, &quot;true&quot;)
 // Retrieve session
 def sess = System.getProperties().get(&quot;Session&quot;)
 
+
+def threadno = ctx.getThreadNum()
+log.info (&quot;Thread #: &quot; + threadno)
+
 // Retrieve producer
-def producer = System.getProperties().get(&quot;Producer&quot;)
+def producer = System.getProperties().get(&quot;Producer-&quot; + threadno)
+
+//log.info (&quot;==&gt; Producer: &quot; + producer)
+
+if (producer == null) {
+	log.info (&quot;Defining Producer-&quot; + threadno)
+	def destination = System.getProperties().get(&quot;Destination&quot;)
+
+	// Define producer
+	producer = sess.createProducer(destination)
+	System.getProperties().put(&quot;Producer-&quot; + threadno, producer)	
+}
 
 // 3
 def rnd = new Random(System.currentTimeMillis())
@@ -302,15 +343,10 @@ log.info (&quot;Latency: &quot; + latency)
 var produced = props.get(&quot;produced&quot;) as Integer +1
 log.info (&quot;Produced: &quot; + produced)
 props.put(&quot;produced&quot;, &quot;&quot; + produced)
+
 </stringProp>
           <stringProp name="scriptLanguage">groovy</stringProp>
         </JSR223Sampler>
-        <hashTree/>
-        <DebugSampler guiclass="TestBeanGUI" testclass="DebugSampler" testname="Debug Sampler - Producer" enabled="false">
-          <boolProp name="displayJMeterProperties">true</boolProp>
-          <boolProp name="displayJMeterVariables">true</boolProp>
-          <boolProp name="displaySystemProperties">false</boolProp>
-        </DebugSampler>
         <hashTree/>
       </hashTree>
       <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="Thread Group - Consumer" enabled="true">
@@ -327,18 +363,12 @@ props.put(&quot;produced&quot;, &quot;&quot; + produced)
         <boolProp name="ThreadGroup.same_user_on_next_iteration">true</boolProp>
       </ThreadGroup>
       <hashTree>
-        <DebugSampler guiclass="TestBeanGUI" testclass="DebugSampler" testname="Debug Sampler" enabled="false">
-          <boolProp name="displayJMeterProperties">false</boolProp>
-          <boolProp name="displayJMeterVariables">true</boolProp>
-          <boolProp name="displaySystemProperties">false</boolProp>
-        </DebugSampler>
-        <hashTree/>
         <ConstantThroughputTimer guiclass="TestBeanGUI" testclass="ConstantThroughputTimer" testname="Constant Throughput Timer" enabled="false">
           <intProp name="calcMode">2</intProp>
           <stringProp name="throughput">${__jexl2(${sampleAtSecond}*60)}</stringProp>
         </ConstantThroughputTimer>
         <hashTree/>
-        <JSR223Sampler guiclass="TestBeanGUI" testclass="JSR223Sampler" testname="JSR223 Sampler - Consumer" enabled="true">
+        <JSR223Sampler guiclass="TestBeanGUI" testclass="JSR223Sampler" testname="Consumer" enabled="true">
           <stringProp name="scriptLanguage">groovy</stringProp>
           <stringProp name="parameters"></stringProp>
           <stringProp name="filename"></stringProp>
@@ -352,7 +382,23 @@ import java.time.Instant
 import java.time.format.DateTimeFormatter
 
 // Retrieve consumer
-def consumer = System.getProperties().get(&quot;Consumer&quot;)
+def threadno = ctx.getThreadNum()
+log.info (&quot;Thread #: &quot; + threadno)
+
+// Retrieve producer
+def consumer = System.getProperties().get(&quot;Consumer-&quot; + threadno)
+
+if (consumer == null) {
+	log.info (&quot;Defining Consumer-&quot; + threadno)
+	
+	// Retrieve session
+	def sess = System.getProperties().get(&quot;Session&quot;)
+	def destination = System.getProperties().get(&quot;Destination&quot;)
+
+	// Define producer
+	consumer = sess.createConsumer(destination)
+	System.getProperties().put(&quot;Consumer-&quot; + threadno, consumer)	
+}
 
 def start = Instant.now()
 
@@ -362,6 +408,8 @@ def msg = consumer.receive(1000)
 def stop = Instant.now()
 
 // 4
+//log.info (&quot;Message: &quot; + msg)
+
 if (msg != null) {
             // 5
 	if (msg instanceof BytesMessage) {
