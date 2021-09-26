@@ -1,0 +1,1 @@
+~/github/jmeter-operator/start_test.sh jmeter tests/ibmmq/MQ.jmx tests/ibmmq/clientkey.jks
