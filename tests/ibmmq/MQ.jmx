@@ -67,18 +67,12 @@
         <boolProp name="ThreadGroup.same_user_on_next_iteration">true</boolProp>
       </SetupThreadGroup>
       <hashTree>
-        <IfController guiclass="IfControllerPanel" testclass="IfController" testname="If Controller" enabled="true">
-          <stringProp name="IfController.condition">${__jexl3(&quot;${setupDone}&quot;== &quot;false&quot;,)}</stringProp>
-          <boolProp name="IfController.evaluateAll">false</boolProp>
-          <boolProp name="IfController.useExpression">true</boolProp>
-        </IfController>
-        <hashTree>
-          <JSR223Timer guiclass="TestBeanGUI" testclass="JSR223Timer" testname="JSR223 Timer - Setup" enabled="true">
-            <stringProp name="scriptLanguage">groovy</stringProp>
-            <stringProp name="parameters"></stringProp>
-            <stringProp name="filename"></stringProp>
-            <stringProp name="cacheKey">true</stringProp>
-            <stringProp name="script">import com.ibm.msg.client.jms.JmsConnectionFactory
+        <JSR223Timer guiclass="TestBeanGUI" testclass="JSR223Timer" testname="JSR223 Timer - setUp" enabled="true">
+          <stringProp name="scriptLanguage">groovy</stringProp>
+          <stringProp name="parameters"></stringProp>
+          <stringProp name="filename"></stringProp>
+          <stringProp name="cacheKey">true</stringProp>
+          <stringProp name="script">import com.ibm.msg.client.jms.JmsConnectionFactory
 import com.ibm.msg.client.jms.JmsFactoryFactory
 import com.ibm.msg.client.wmq.WMQConstants
 
@@ -137,6 +131,7 @@ def conn = cf.createConnection(&quot;app&quot;, &quot;test&quot;)
 
 log.info (&quot;==&gt; Creating session&quot;)
 def sess = conn.createSession(false, Session.AUTO_ACKNOWLEDGE)
+log.info (&quot;sess: &quot; + sess)
 
 // 5
 def destination = sess.createQueue(queueName)
@@ -185,9 +180,20 @@ System.getProperties().put(&quot;CompletionListener&quot;, listener)
 log.info(&quot;#### Start completed!&quot;)
 
 </stringProp>
-          </JSR223Timer>
-          <hashTree/>
-        </hashTree>
+        </JSR223Timer>
+        <hashTree/>
+        <DebugSampler guiclass="TestBeanGUI" testclass="DebugSampler" testname="Debug Sampler - setUp" enabled="true">
+          <boolProp name="displayJMeterProperties">false</boolProp>
+          <boolProp name="displayJMeterVariables">true</boolProp>
+          <boolProp name="displaySystemProperties">false</boolProp>
+        </DebugSampler>
+        <hashTree/>
+        <IfController guiclass="IfControllerPanel" testclass="IfController" testname="If Controller" enabled="false">
+          <stringProp name="IfController.condition">${__jexl3(&quot;${setupDone}&quot;== &quot;false&quot;,)}</stringProp>
+          <boolProp name="IfController.evaluateAll">false</boolProp>
+          <boolProp name="IfController.useExpression">true</boolProp>
+        </IfController>
+        <hashTree/>
       </hashTree>
       <PostThreadGroup guiclass="PostThreadGroupGui" testclass="PostThreadGroup" testname="tearDown Thread Group - Close connections" enabled="true">
         <stringProp name="ThreadGroup.on_sample_error">continue</stringProp>
@@ -222,9 +228,10 @@ System.getProperties().remove(&quot;Producer-&quot; + threadno)
 def consumer = System.getProperties().get(&quot;Consumer-&quot; + threadno)
 
 log.info (&quot;==&gt; Consumer: &quot; + consumer)
-consumer.close()
-System.getProperties().remove(&quot;Consumer-&quot; + threadno)
-</stringProp>
+if (consumer != null) {
+	consumer.close()
+	System.getProperties().remove(&quot;Consumer-&quot; + threadno)
+}</stringProp>
         </JSR223Sampler>
         <hashTree/>
       </hashTree>
@@ -242,7 +249,24 @@ System.getProperties().remove(&quot;Consumer-&quot; + threadno)
         <boolProp name="ThreadGroup.same_user_on_next_iteration">true</boolProp>
       </PostThreadGroup>
       <hashTree>
-        <IfController guiclass="IfControllerPanel" testclass="IfController" testname="If Controller" enabled="true">
+        <JSR223Assertion guiclass="TestBeanGUI" testclass="JSR223Assertion" testname="Check produced and consumed" enabled="true">
+          <stringProp name="cacheKey">true</stringProp>
+          <stringProp name="filename"></stringProp>
+          <stringProp name="parameters"></stringProp>
+          <stringProp name="script">var produced = props.get(&quot;produced&quot;)
+var consumed = props.get(&quot;consumed&quot;)
+
+log.info (&quot;==&gt; Produced &quot; + produced + &quot; but consumed &quot; + consumed)
+
+if (consumed != produced) {
+	AssertionResult.setFailure(true)
+	AssertionResult.setFailureMessage(&quot;Produced &quot; + produced + &quot; but consumed &quot; + consumed)
+}
+</stringProp>
+          <stringProp name="scriptLanguage">groovy</stringProp>
+        </JSR223Assertion>
+        <hashTree/>
+        <IfController guiclass="IfControllerPanel" testclass="IfController" testname="If Controller" enabled="false">
           <stringProp name="IfController.condition">${__jexl3(&quot;${stopDone}&quot;== &quot;false&quot;,)}</stringProp>
           <boolProp name="IfController.evaluateAll">false</boolProp>
           <boolProp name="IfController.useExpression">true</boolProp>
@@ -253,23 +277,6 @@ System.getProperties().remove(&quot;Consumer-&quot; + threadno)
             <boolProp name="displayJMeterVariables">true</boolProp>
             <boolProp name="displaySystemProperties">false</boolProp>
           </DebugSampler>
-          <hashTree/>
-          <JSR223Assertion guiclass="TestBeanGUI" testclass="JSR223Assertion" testname="Check produced and consumed" enabled="true">
-            <stringProp name="cacheKey">true</stringProp>
-            <stringProp name="filename"></stringProp>
-            <stringProp name="parameters"></stringProp>
-            <stringProp name="script">var produced = props.get(&quot;produced&quot;)
-var consumed = props.get(&quot;consumed&quot;)
-
-log.info (&quot;==&gt; Produced &quot; + produced + &quot; but consumed &quot; + consumed)
-
-if (consumed != produced) {
-	AssertionResult.setFailure(true)
-	AssertionResult.setFailureMessage(&quot;Produced &quot; + produced + &quot; but consumed &quot; + consumed)
-}
-</stringProp>
-            <stringProp name="scriptLanguage">groovy</stringProp>
-          </JSR223Assertion>
           <hashTree/>
           <JSR223Timer guiclass="TestBeanGUI" testclass="JSR223Timer" testname="JSR223 Timer - Stop" enabled="true">
             <stringProp name="scriptLanguage">groovy</stringProp>
@@ -316,9 +323,13 @@ vars.put(&quot;stopDone&quot;, &quot;true&quot;)
           <stringProp name="filename"></stringProp>
           <stringProp name="parameters"></stringProp>
           <stringProp name="script">import java.time.Instant
+import com.ibm.mq.jms.MQMessageProducer
+//import com.ibm.mq.jms.MQQueueSender
 
 // Retrieve session
 def sess = System.getProperties().get(&quot;Session&quot;)
+
+log.info(&quot;Session: &quot; + sess)
 
 
 def threadno = ctx.getThreadNum()
@@ -334,8 +345,10 @@ if (producer == null) {
 	def destination = System.getProperties().get(&quot;Destination&quot;)
 
 	// Define producer
-	producer = sess.createProducer(destination)
-	System.getProperties().put(&quot;Producer-&quot; + threadno, producer)	
+	producer =  sess.createProducer(destination)
+	System.getProperties().put(&quot;Producer-&quot; + threadno, producer)
+
+	log.info(&quot;Producer: &quot; + producer.getClass())
 }
 
 // Retrieve listener
@@ -355,7 +368,9 @@ def msg = sess.createTextMessage(payload)
 def start = Instant.now()
 
 // Send message
-producer.send(msg, listener) // Async
+log.info(&quot;Producer: &quot; + producer.getClass())
+
+((com.ibm.mq.jms.MQMessageProducer)producer).send(msg, listener) // Async
 //producer.send(msg) // Synchronous 
 
 

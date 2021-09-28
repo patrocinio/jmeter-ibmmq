@@ -13,6 +13,8 @@ import  com.ibm.msg.client.jms.JmsFactoryFactory;
 import com.ibm.msg.client.wmq.WMQConstants;
 import com.ibm.msg.client.jms.JmsConnectionFactory;
 
+import org.patrocinio.ibmmq.MQProducer;
+
 class Producer {
 
     private static final String   HOST_NAME           = "secureqm-ibm-mq-qm-mq.patrocinio-684-dallas-ddd93d3a0fef01f6b396b69d343df410-0000.us-south.containers.appdomain.cloud";
@@ -29,8 +31,8 @@ class Producer {
     private Connection          conn;
     private Destination         destination;
     private Session             sess;
-    private CompletionListener  listener;
     private MessageProducer     producer;
+    private MQProducer          mqProducer;
 
     private void setUp () {
         try {
@@ -75,36 +77,19 @@ class Producer {
 
     }
 
-    private void createListener() {
-        System.out.println ("Creating listener");
-        listener = new CompletionListener() {
-            @Override
-            public void onCompletion(Message msg) {
-                try {
-                    System.out.println(msg.getBody(String.class));
-                } catch (JMSException ex) {
-                    ex.printStackTrace();
-                }
-            }
-
-            @Override
-            public void onException(Message msg, Exception e) {
-                try {
-                    System.out.println(msg.getBody(String.class));
-                } catch (JMSException ex) {
-                    ex.printStackTrace();
-                }
-            }
-        };
-    }
-
     private void createProducer() {
         System.out.println ("Creating producer");
         try {
             producer = sess.createProducer(destination);
+
+            System.out.println ("Producer: " + producer.getClass());
         } catch (JMSException e) {
             e.printStackTrace();
         }
+    }
+
+    private void createMQProducer() {
+        mqProducer = new MQProducer(producer);
     }
 
     private void sendMessage() {
@@ -113,7 +98,7 @@ class Producer {
             TextMessage msg = sess.createTextMessage(payload);
 
             System.out.println ("Sending message");
-            producer.send(msg, listener);
+            mqProducer.send(msg);
         } catch (JMSException e) {
             e.printStackTrace();
         }
@@ -123,8 +108,8 @@ class Producer {
         System.out.println ("Running producer...");
 
         setUp();
-        createListener();
         createProducer();
+        createMQProducer();
         sendMessage();
     }
 
