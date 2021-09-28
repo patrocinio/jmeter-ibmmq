@@ -163,7 +163,7 @@ def listener = new CompletionListener() {
                 @Override
                 public void onCompletion(Message msg) {
                     try {
-                        // System.out.println(msg.getBody(String.class));
+                        System.out.println(msg.getBody(String.class));
                     } catch (JMSException ex) {
                         Logger.getLogger(MessageSenderAsync.class.getName()).log(Level.SEVERE, null, ex);
                     }
@@ -186,12 +186,6 @@ log.info(&quot;#### Start completed!&quot;)
 
 </stringProp>
           </JSR223Timer>
-          <hashTree/>
-          <DebugSampler guiclass="TestBeanGUI" testclass="DebugSampler" testname="Debug Sampler - setUp" enabled="true">
-            <boolProp name="displayJMeterProperties">false</boolProp>
-            <boolProp name="displayJMeterVariables">true</boolProp>
-            <boolProp name="displaySystemProperties">false</boolProp>
-          </DebugSampler>
           <hashTree/>
         </hashTree>
       </hashTree>
@@ -361,8 +355,8 @@ def msg = sess.createTextMessage(payload)
 def start = Instant.now()
 
 // Send message
-producer.send(msg, listener)
-//producer.send(msg)
+producer.send(msg, listener) // Async
+//producer.send(msg) // Synchronous 
 
 
 def stop = Instant.now()
