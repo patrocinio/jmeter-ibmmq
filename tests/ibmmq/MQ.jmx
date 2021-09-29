@@ -152,6 +152,7 @@ vars.put(&quot;setupDone&quot;, &quot;true&quot;)
 props.put(&quot;produced&quot;, 0)
 props.put(&quot;consumed&quot;, 0)
 
+
 // Define CompletionListener
 // Define CompetionListener
 def listener = new CompletionListener() {
@@ -174,7 +175,6 @@ def listener = new CompletionListener() {
                 }
             }
 System.getProperties().put(&quot;CompletionListener&quot;, listener)
-
 
 
 log.info(&quot;#### Start completed!&quot;)
@@ -323,17 +323,12 @@ vars.put(&quot;stopDone&quot;, &quot;true&quot;)
           <stringProp name="filename"></stringProp>
           <stringProp name="parameters"></stringProp>
           <stringProp name="script">import java.time.Instant
-import com.ibm.mq.jms.MQMessageProducer
-//import com.ibm.mq.jms.MQQueueSender
 
 // Retrieve session
 def sess = System.getProperties().get(&quot;Session&quot;)
 
-log.info(&quot;Session: &quot; + sess)
-
-
 def threadno = ctx.getThreadNum()
-log.info (&quot;Thread #: &quot; + threadno)
+//log.info (&quot;Thread #: &quot; + threadno)
 
 // Retrieve producer
 def producer = System.getProperties().get(&quot;Producer-&quot; + threadno)
@@ -346,37 +341,31 @@ if (producer == null) {
 
 	// Define producer
 	producer =  sess.createProducer(destination)
+
 	System.getProperties().put(&quot;Producer-&quot; + threadno, producer)
 
-	log.info(&quot;Producer: &quot; + producer.getClass())
 }
 
 // Retrieve listener
 def listener = System.getProperties().get(&quot;CompletionListener&quot;)
-
-
 
 // 3
 def rnd = new Random(System.currentTimeMillis())
 
 // 4
 def payload = String.format(&quot;JMeter...IBM MQ...test message no. %09d!&quot;, rnd.nextInt(Integer.MAX_VALUE))
-log.info (&quot;==&gt; Payload: &quot; + payload)
 def msg = sess.createTextMessage(payload)
 
 
-def start = Instant.now()
+//def start = Instant.now()
 
 // Send message
-log.info(&quot;Producer: &quot; + producer.getClass())
+producer.send(msg, listener)
 
-((com.ibm.mq.jms.MQMessageProducer)producer).send(msg, listener) // Async
-//producer.send(msg) // Synchronous 
-
-
-def stop = Instant.now()
+//def stop = Instant.now()
 
 // 7
+/*
 var latency = stop.toEpochMilli() - start.toEpochMilli()
 
 SampleResult.setResponseData(msg.toString())
@@ -385,6 +374,7 @@ SampleResult.setLatency( latency )
 
 
 log.info (&quot;Latency: &quot; + latency)
+*/
 
 // Update produced
 var produced = props.get(&quot;produced&quot;) as Integer +1
@@ -395,7 +385,7 @@ props.put(&quot;produced&quot;, &quot;&quot; + produced)
         </JSR223Sampler>
         <hashTree/>
       </hashTree>
-      <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="Thread Group - Consumer" enabled="false">
+      <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="Thread Group - Consumer" enabled="true">
         <stringProp name="ThreadGroup.on_sample_error">stoptestnow</stringProp>
         <elementProp name="ThreadGroup.main_controller" elementType="LoopController" guiclass="LoopControlPanel" testclass="LoopController" testname="Loop Controller" enabled="true">
           <boolProp name="LoopController.continue_forever">false</boolProp>

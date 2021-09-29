@@ -36,6 +36,7 @@ public class MQProducer {
 
     public MQProducer (MessageProducer sender) {
         this.sender = sender;
+        System.out.println ("Sender: " + sender.getClass());
         this.listener = createListener();
     }
 
@@ -45,5 +46,9 @@ public class MQProducer {
         } catch (IllegalArgumentException | UnsupportedOperationException | JMSException e) {
             e.printStackTrace();
         }
+    }
+
+    public void close () throws JMSException {
+        sender.close();
     }
 }

@@ -25,6 +25,9 @@ RUN    apk update \
 	&& mkdir -p /opt  \
 	&& tar -xzf /tmp/dependencies/apache-jmeter-${JMETER_VERSION}.tgz -C /opt  \
 	&& rm -rf /tmp/dependencies
+	
+# Remove geronimo library
+RUN rm /opt/apache-jmeter-${JMETER_VERSION}/lib/geronimo-jms_1.1_spec-1.1.1.jar
 
 # TODO: plugins (later)
 # && unzip -oq "/tmp/dependencies/JMeterPlugins-*.zip" -d $JMETER_HOME
