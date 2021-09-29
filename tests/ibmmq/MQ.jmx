@@ -149,8 +149,8 @@ System.getProperties().put(&quot;Destination&quot;, destination)
 vars.put(&quot;setupDone&quot;, &quot;true&quot;)
 
 // Define global properties
-props.put(&quot;produced&quot;, 0)
-props.put(&quot;consumed&quot;, 0)
+props.put(&quot;produced&quot;, &quot;0&quot;)
+props.put(&quot;consumed&quot;, &quot;0&quot;)
 
 
 // Define CompletionListener
@@ -328,7 +328,7 @@ vars.put(&quot;stopDone&quot;, &quot;true&quot;)
 def sess = System.getProperties().get(&quot;Session&quot;)
 
 def threadno = ctx.getThreadNum()
-//log.info (&quot;Thread #: &quot; + threadno)
+log.info (&quot;Thread #: &quot; + threadno)
 
 // Retrieve producer
 def producer = System.getProperties().get(&quot;Producer-&quot; + threadno)
@@ -377,7 +377,9 @@ log.info (&quot;Latency: &quot; + latency)
 */
 
 // Update produced
-var produced = props.get(&quot;produced&quot;) as Integer +1
+//log.info(&quot;Updating produced&quot;)
+int produced = props.get(&quot;produced&quot;) as int 
+produced = produced + 1
 log.info (&quot;Produced: &quot; + produced)
 props.put(&quot;produced&quot;, &quot;&quot; + produced)
 </stringProp>
@@ -472,8 +474,8 @@ if (msg != null) {
 	SampleResult.setDataType( org.apache.jmeter.samplers.SampleResult.TEXT )
 	SampleResult.setLatency( stop.toEpochMilli() - start.toEpochMilli() )
 
-	var consumed = props.get(&quot;consumed&quot;) as Integer
-	consumed = consumed+1
+	int consumed = props.get(&quot;consumed&quot;) as int
+	consumed = consumed + 1
 	log.info (&quot;Consumed: &quot; + consumed)
 	props.put(&quot;consumed&quot;, &quot;&quot; + consumed)
 
