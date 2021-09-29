@@ -109,7 +109,7 @@ cf.setStringProperty	(WMQConstants.WMQ_QUEUE_MANAGER, 		queueManagerName)
  * TLS Section
  */
  
-def tlsKeystorePath = &quot;tests/ibmmq/clientkey.jks&quot;;
+def tlsKeystorePath = &quot;clientkey.jks&quot;;
 def tlsKeystorePwd = &quot;password&quot;;
 
 //cf.setStringProperty(WMQConstants.WMQ_SSL_CIPHER_SUITE, cipherSuite)
@@ -419,7 +419,7 @@ import java.time.format.DateTimeFormatter
 
 // Retrieve consumer
 def threadno = ctx.getThreadNum()
-log.info (&quot;Thread #: &quot; + threadno)
+//log.info (&quot;Thread #: &quot; + threadno)
 
 // Retrieve producer
 def consumer = System.getProperties().get(&quot;Consumer-&quot; + threadno)
@@ -472,7 +472,8 @@ if (msg != null) {
 	SampleResult.setDataType( org.apache.jmeter.samplers.SampleResult.TEXT )
 	SampleResult.setLatency( stop.toEpochMilli() - start.toEpochMilli() )
 
-	var consumed = props.get(&quot;consumed&quot;) as Integer +1
+	var consumed = props.get(&quot;consumed&quot;) as Integer
+	consumed = consumed+1
 	log.info (&quot;Consumed: &quot; + consumed)
 	props.put(&quot;consumed&quot;, &quot;&quot; + consumed)
 
