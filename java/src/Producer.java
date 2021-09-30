@@ -23,7 +23,7 @@ class Producer {
 
     private static final  int DURATION = 60;
 
-    private static final String TLS_KEYSTORE_PATH = "/Users/edu/github/jmeter-ibmmq/tests/ibmmq/clientkey.jks";
+    private static final String TLS_KEYSTORE_PATH = "clientkey.jks";
     private static final String TLS_KEYSTORE_PWD  = "password";
 
     private static final String  CIPHER_SPEC 		= "ECDHE_RSA_AES_128_CBC_SHA256";
@@ -52,6 +52,7 @@ class Producer {
 
 
             System.out.println ("Defining System properties");
+            System.out.println ("TLS Keystore path: " + TLS_KEYSTORE_PATH);
             System.setProperty("com.ibm.mq.cfg.preferTLS", 			    "true");
             System.setProperty("com.ibm.mq.cfg.useIBMCipherMappings", 	"false");
             System.setProperty("javax.net.ssl.keyStore", 			    TLS_KEYSTORE_PATH);

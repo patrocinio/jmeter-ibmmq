@@ -1,1 +1,1 @@
-docker build -t patrocinio/java-ibmmq:lastest .
+docker build -t patrocinio/java-ibmmq:latest .

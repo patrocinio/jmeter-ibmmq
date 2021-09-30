@@ -1,0 +1,341 @@
+----------------------------------START FFST------------------------------------
+/Users/edu/github/jmeter-ibmmq/java/FFDC/JMSCC0001.FDC PID:98749
+
+                                    IBM MQ classes for JMS and Java (AllClient packaging) First Failure Symptom Report
+                                            
+
+Product          :- IBM MQ classes for JMS and Java (AllClient packaging)
+Date/Time        :- Thu Sep 30 14:51:39 EDT 2021
+System time      :- 1633027899378
+Operating System :- Mac OS X
+UserID           :- edu
+Java Vendor      :- Oracle Corporation
+Java Version     :- 14.0.2+12-46
+
+Source Class     :- com.ibm.mq.jmqi.remote.impl.RemoteTCPConnection
+Source Method    :- getNonFipsSocketFactory()
+ProbeID          :- 03
+Thread           :- name=main priority=5 group=main ccl=jdk.internal.loader.ClassLoaders$AppClassLoader@55054057
+
+                                      Data
+                                      ----
+
+|   Description        :-  Cannot open keystore file
+|   Exception message  :-  clientkey.jks (No such file or directory)
+
+                              Version information
+                              -------------------
+
+IBM MQ JMS Provider
+9.2.3.0
+p923-L210708
+Production
+Component Title: IBM MQ JMS Provider
+Component Name:  com.ibm.msg.client.wmq
+Version:         9.2.3.0
+Class Name:      class com.ibm.msg.client.wmq.factories.WMQComponent
+CMVC:            p923-L210708
+Jar location:    file:/Users/edu/github/jmeter-ibmmq/lib/ibmmq/com.ibm.mq.allclient-9.2.3.0.jar
+Factory Class:   class com.ibm.msg.client.wmq.factories.WMQFactoryFactory
+
+Common Services for Java Platform, Standard Edition
+9.2.3.0
+p923-L210708
+Production
+inPreferenceTo[0]: com.ibm.msg.client.commonservices.j2me
+Component Title:   Common Services for Java Platform, Standard Edition
+Component Name:    com.ibm.msg.client.commonservices.j2se
+Version:           9.2.3.0
+Class Name:        class com.ibm.msg.client.commonservices.j2se.J2SEComponent
+CMVC:              p923-L210708
+Jar location:      file:/Users/edu/github/jmeter-ibmmq/lib/ibmmq/com.ibm.mq.allclient-9.2.3.0.jar
+Factory Class:     class com.ibm.msg.client.commonservices.j2se.CommonServicesImplementation
+
+Java Message Service Client
+9.2.3.0
+p923-L210708
+Production
+Component Title: Java Message Service Client
+Component Name:  com.ibm.msg.client.jms
+Version:         9.2.3.0
+Class Name:      class com.ibm.msg.client.jms.internal.JMSComponent
+CMVC:            p923-L210708
+Jar location:    file:/Users/edu/github/jmeter-ibmmq/lib/ibmmq/com.ibm.mq.allclient-9.2.3.0.jar
+Factory Class:   null
+
+IBM MQ classes for Java Message Service
+9.2.3.0
+p923-L210708
+Production
+Component Title: IBM MQ classes for Java Message Service
+Component Name:  com.ibm.mq.jms
+Version:         9.2.3.0
+BuiltWith:       IBM Corporation  8.0.5.17 - pxa6480sr5fp17-20180627_01(SR5 FP17) Linux
+Class Name:      class com.ibm.mq.jms.MQJMSComponent
+CMVC:            p923-L210708
+Jar location:    file:/Users/edu/github/jmeter-ibmmq/lib/ibmmq/com.ibm.mq.allclient-9.2.3.0.jar
+Factory Class:   null
+
+IBM MQ classes for Java
+9.2.3.0
+p923-L210708
+Production
+Component Title: IBM MQ classes for Java
+Component Name:  com.ibm.mq
+Version:         9.2.3.0
+BasedOn:         
+Class Name:      class com.ibm.mq.MQJavaComponent
+CMVC:            p923-L210708
+Jar location:    file:/Users/edu/github/jmeter-ibmmq/lib/ibmmq/com.ibm.mq.allclient-9.2.3.0.jar
+APARs:           
+title:           
+Factory Class:   null
+
+
+
+                                  Stack trace
+                                  -----------
+
+Stack trace to show the location of the FFST call
+|   FFST Location  :-  java.lang.Exception
+|   	at com.ibm.msg.client.commonservices.trace.Trace.getCurrentPosition(Trace.java:2152)
+|   	at com.ibm.msg.client.commonservices.trace.Trace.createFFSTString(Trace.java:2059)
+|   	at com.ibm.msg.client.commonservices.trace.Trace.ffstInternal(Trace.java:1943)
+|   	at com.ibm.msg.client.commonservices.trace.Trace.ffst(Trace.java:1745)
+|   	at com.ibm.mq.jmqi.remote.impl.RemoteTCPConnection.getNonFipsSocketFactory(RemoteTCPConnection.java:2888)
+|   	at com.ibm.mq.jmqi.remote.impl.RemoteTCPConnection.chooseSocketFactory(RemoteTCPConnection.java:2650)
+|   	at com.ibm.mq.jmqi.remote.impl.RemoteTCPConnection.makeSocketSecure(RemoteTCPConnection.java:2314)
+|   	at com.ibm.mq.jmqi.remote.impl.RemoteTCPConnection.bindAndConnectSocket(RemoteTCPConnection.java:845)
+|   	at com.ibm.mq.jmqi.remote.impl.RemoteTCPConnection.protocolConnect(RemoteTCPConnection.java:1417)
+|   	at com.ibm.mq.jmqi.remote.impl.RemoteConnection.connect(RemoteConnection.java:995)
+|   	at com.ibm.mq.jmqi.remote.impl.RemoteConnectionSpecification.getNewConnection(RemoteConnectionSpecification.java:572)
+|   	at com.ibm.mq.jmqi.remote.impl.RemoteConnectionSpecification.getSessionFromNewConnection(RemoteConnectionSpecification.java:246)
+|   	at com.ibm.mq.jmqi.remote.impl.RemoteConnectionSpecification.getSession(RemoteConnectionSpecification.java:154)
+|   	at com.ibm.mq.jmqi.remote.impl.RemoteConnectionPool.getSession(RemoteConnectionPool.java:127)
+|   	at com.ibm.mq.jmqi.remote.api.RemoteFAP$Connector.jmqiConnect(RemoteFAP.java:13345)
+|   	at com.ibm.mq.jmqi.remote.api.RemoteFAP$Connector.access$100(RemoteFAP.java:13143)
+|   	at com.ibm.mq.jmqi.remote.api.RemoteFAP.jmqiConnect(RemoteFAP.java:1448)
+|   	at com.ibm.mq.jmqi.remote.api.RemoteFAP.jmqiConnect(RemoteFAP.java:1389)
+|   	at com.ibm.mq.ese.jmqi.InterceptedJmqiImpl.jmqiConnect(InterceptedJmqiImpl.java:377)
+|   	at com.ibm.mq.ese.jmqi.ESEJMQI.jmqiConnect(ESEJMQI.java:562)
+|   	at com.ibm.msg.client.wmq.internal.WMQConnection.<init>(WMQConnection.java:389)
+|   	at com.ibm.msg.client.wmq.factories.WMQConnectionFactory.createV7ProviderConnection(WMQConnectionFactory.java:8683)
+|   	at com.ibm.msg.client.wmq.factories.WMQConnectionFactory.createProviderConnection(WMQConnectionFactory.java:8023)
+|   	at com.ibm.msg.client.jms.admin.JmsConnectionFactoryImpl._createConnection(JmsConnectionFactoryImpl.java:322)
+|   	at com.ibm.msg.client.jms.admin.JmsConnectionFactoryImpl.createConnection(JmsConnectionFactoryImpl.java:242)
+|   	at com.ibm.mq.jms.MQConnectionFactory.createCommonConnection(MQConnectionFactory.java:6026)
+|   	at com.ibm.mq.jms.MQConnectionFactory.createConnection(MQConnectionFactory.java:6086)
+|   	at Producer.setUp(Producer.java:63)
+|   	at Producer.run(Producer.java:129)
+|   	at Producer.main(Producer.java:145)
+|   
+
+                            Property Store Contents
+                            -----------------------
+
+All currently set properties
+|   file.encoding                  :-  UTF-8
+|   file.separator                 :-  /
+|   java.class.path                :-  output:/Users/edu/github/jmeter-ibmmq/lib/ibmmq/javax.jms-api-2.0.1.jar:/Users/edu/github/jmeter-ibmmq/lib/ibmmq/com.ibm.mq.allclient-9.2.3.0.jar
+|   java.class.version             :-  58.0
+|   java.home                      :-  /Library/Java/JavaVirtualMachines/jdk-14.0.2.jdk/Contents/Home
+|   java.io.tmpdir                 :-  /var/folders/m2/x6swj1rn56328pstdfm3r6vc0000gn/T/
+|   java.library.path              :-  /Users/edu/Library/Java/Extensions:/Library/Java/Extensions:/Network/Library/Java/Extensions:/System/Library/Java/Extensions:/usr/lib/java:.
+|   java.runtime.name              :-  Java(TM) SE Runtime Environment
+|   java.runtime.version           :-  14.0.2+12-46
+|   java.specification.name        :-  Java Platform API Specification
+|   java.specification.vendor      :-  Oracle Corporation
+|   java.specification.version     :-  14
+|   java.vendor                    :-  Oracle Corporation
+|   java.vendor.url                :-  https://java.oracle.com/
+|   java.vendor.url.bug            :-  https://bugreport.java.com/bugreport/
+|   java.version                   :-  14.0.2
+|   java.version.date              :-  2020-07-14
+|   java.vm.compressedOopsMode     :-  Zero based
+|   java.vm.info                   :-  mixed mode, sharing
+|   java.vm.name                   :-  Java HotSpot(TM) 64-Bit Server VM
+|   java.vm.specification.name     :-  Java Virtual Machine Specification
+|   java.vm.specification.vendor   :-  Oracle Corporation
+|   java.vm.specification.version  :-  14
+|   java.vm.vendor                 :-  Oracle Corporation
+|   java.vm.version                :-  14.0.2+12-46
+|   jdk.debug                      :-  release
+|   line.separator                 :-  
+|   
+|   os.arch                        :-  x86_64
+|   os.name                        :-  Mac OS X
+|   os.version                     :-  10.16
+|   path.separator                 :-  :
+|   sun.arch.data.model            :-  64
+|   sun.boot.library.path          :-  /Library/Java/JavaVirtualMachines/jdk-14.0.2.jdk/Contents/Home/lib
+|   sun.cpu.endian                 :-  little
+|   sun.io.unicode.encoding        :-  UnicodeBig
+|   sun.java.command               :-  Producer
+|   sun.java.launcher              :-  SUN_STANDARD
+|   sun.jnu.encoding               :-  UTF-8
+|   sun.management.compiler        :-  HotSpot 64-Bit Tiered Compilers
+|   user.country                   :-  US
+|   user.dir                       :-  /Users/edu/github/jmeter-ibmmq/java
+|   user.home                      :-  /Users/edu
+|   user.language                  :-  en
+|   user.name                      :-  edu
+
+                           WorkQueueMananger Contents
+                           --------------------------
+
+|   Current ThreadPool size      :-  0
+|   Maintain ThreadPool size     :-  false
+|   Maximum ThreadPool size      :-  -1
+|   ThreadPool inactive timeout  :-  0
+
+                               Runtime properties
+                               ------------------
+
+|   Available processors         :-  16
+|   Free memory in bytes (now)   :-  263005696
+|   Max memory in bytes          :-  4294967296
+|   Total memory in bytes (now)  :-  270532608
+
+                           Component Manager Contents
+                           --------------------------
+
+Common Services Components:
+|   CMVC               :-  p923-L210708
+|   Class Name         :-  class com.ibm.msg.client.commonservices.j2se.J2SEComponent
+|   Component Name     :-  com.ibm.msg.client.commonservices.j2se
+|   Component Title    :-  Common Services for Java Platform, Standard Edition
+|   Factory Class      :-  class com.ibm.msg.client.commonservices.j2se.CommonServicesImplementation
+|   Jar location       :-  file:/Users/edu/github/jmeter-ibmmq/lib/ibmmq/com.ibm.mq.allclient-9.2.3.0.jar
+|   Version            :-  9.2.3.0
+|   inPreferenceTo[0]  :-  com.ibm.msg.client.commonservices.j2me
+
+Messaging Provider Components:
+|   CMVC             :-  p923-L210708
+|   Class Name       :-  class com.ibm.msg.client.wmq.factories.WMQComponent
+|   Component Name   :-  com.ibm.msg.client.wmq
+|   Component Title  :-  IBM MQ JMS Provider
+|   Factory Class    :-  class com.ibm.msg.client.wmq.factories.WMQFactoryFactory
+|   Jar location     :-  file:/Users/edu/github/jmeter-ibmmq/lib/ibmmq/com.ibm.mq.allclient-9.2.3.0.jar
+|   Version          :-  9.2.3.0
+
+
+
+
+                         Provider Specific Information
+                         -----------------------------
+
+Overview of JMS System
+Num. Contexts    : 0
+Num. Connections : 0
+Num. Sessions    : 0
+Num. Consumers   : 0
+Num. Producers   : 0
+
+Detailed JMS System Information
+Contexts      : 
+Connections      : 
+Sessions         : 
+Consumers        : 
+Producers        : 
+
+All Thread Information
+
+                          Name : Finalizer
+                      Priority : 8
+                   ThreadGroup : java.lang.ThreadGroup[name=system,maxpri=10]
+                            ID : 3
+                         State : WAITING
+                         Stack : java.lang.Object.wait(Object.java:-2)
+                               : java.lang.ref.ReferenceQueue.remove(ReferenceQueue.java:155)
+                               : java.lang.ref.ReferenceQueue.remove(ReferenceQueue.java:176)
+                               : java.lang.ref.Finalizer$FinalizerThread.run(Finalizer.java:170)
+
+                          Name : Common-Cleaner
+                      Priority : 8
+                   ThreadGroup : java.lang.ThreadGroup[name=InnocuousThreadGroup,maxpri=10]
+                            ID : 20
+                         State : TIMED_WAITING
+                         Stack : java.lang.Object.wait(Object.java:-2)
+                               : java.lang.ref.ReferenceQueue.remove(ReferenceQueue.java:155)
+                               : jdk.internal.ref.CleanerImpl.run(CleanerImpl.java:148)
+                               : java.lang.Thread.run(Thread.java:832)
+                               : jdk.internal.misc.InnocuousThread.run(InnocuousThread.java:134)
+
+                          Name : JMSCCThreadPoolMaster
+                      Priority : 5
+                   ThreadGroup : java.lang.ThreadGroup[name=main,maxpri=10]
+                            ID : 22
+                         State : WAITING
+                         Stack : java.lang.Object.wait(Object.java:-2)
+                               : java.lang.Object.wait(Object.java:321)
+                               : com.ibm.msg.client.commonservices.j2se.workqueue.WorkQueueManagerImplementation$WorkQueueManagerThread.waitForNotification(WorkQueueManagerImplementation.java:672)
+                               : com.ibm.msg.client.commonservices.j2se.workqueue.WorkQueueManagerImplementation$WorkQueueManagerThread.waitForNotification(WorkQueueManagerImplementation.java:641)
+                               : com.ibm.msg.client.commonservices.j2se.workqueue.WorkQueueManagerImplementation$WorkQueueManagerThread.run(WorkQueueManagerImplementation.java:908)
+
+                          Name : main
+                      Priority : 5
+                   ThreadGroup : java.lang.ThreadGroup[name=main,maxpri=10]
+                            ID : 1
+                         State : RUNNABLE
+                         Stack : java.lang.Thread.dumpThreads(Thread.java:-2)
+                               : java.lang.Thread.getAllStackTraces(Thread.java:1649)
+                               : com.ibm.msg.client.commonservices.j2se.trace.DefaultTracer.generateThreadInfo(DefaultTracer.java:1442)
+                               : com.ibm.msg.client.commonservices.j2se.trace.DefaultTracer.access$1200(DefaultTracer.java:151)
+                               : com.ibm.msg.client.commonservices.j2se.trace.DefaultTracer$10.run(DefaultTracer.java:1382)
+                               : com.ibm.msg.client.commonservices.j2se.trace.DefaultTracer$10.run(DefaultTracer.java:1306)
+                               : java.security.AccessController.executePrivileged(AccessController.java:753)
+                               : java.security.AccessController.doPrivileged(AccessController.java:312)
+                               : com.ibm.msg.client.commonservices.j2se.trace.DefaultTracer.ffst(DefaultTracer.java:1306)
+                               : com.ibm.msg.client.commonservices.j2se.wmqsupport.TracerImpl.ffst(TracerImpl.java:176)
+                               : com.ibm.msg.client.commonservices.trace.Trace.ffstInternal(Trace.java:1948)
+                               : com.ibm.msg.client.commonservices.trace.Trace.ffst(Trace.java:1745)
+                               : com.ibm.mq.jmqi.remote.impl.RemoteTCPConnection.getNonFipsSocketFactory(RemoteTCPConnection.java:2888)
+                               : com.ibm.mq.jmqi.remote.impl.RemoteTCPConnection.chooseSocketFactory(RemoteTCPConnection.java:2650)
+                               : com.ibm.mq.jmqi.remote.impl.RemoteTCPConnection.makeSocketSecure(RemoteTCPConnection.java:2314)
+                               : com.ibm.mq.jmqi.remote.impl.RemoteTCPConnection.bindAndConnectSocket(RemoteTCPConnection.java:845)
+                               : com.ibm.mq.jmqi.remote.impl.RemoteTCPConnection.protocolConnect(RemoteTCPConnection.java:1417)
+                               : com.ibm.mq.jmqi.remote.impl.RemoteConnection.connect(RemoteConnection.java:995)
+                               : com.ibm.mq.jmqi.remote.impl.RemoteConnectionSpecification.getNewConnection(RemoteConnectionSpecification.java:572)
+                               : com.ibm.mq.jmqi.remote.impl.RemoteConnectionSpecification.getSessionFromNewConnection(RemoteConnectionSpecification.java:246)
+                               : com.ibm.mq.jmqi.remote.impl.RemoteConnectionSpecification.getSession(RemoteConnectionSpecification.java:154)
+                               : com.ibm.mq.jmqi.remote.impl.RemoteConnectionPool.getSession(RemoteConnectionPool.java:127)
+                               : com.ibm.mq.jmqi.remote.api.RemoteFAP$Connector.jmqiConnect(RemoteFAP.java:13345)
+                               : com.ibm.mq.jmqi.remote.api.RemoteFAP$Connector.access$100(RemoteFAP.java:13143)
+                               : com.ibm.mq.jmqi.remote.api.RemoteFAP.jmqiConnect(RemoteFAP.java:1448)
+                               : com.ibm.mq.jmqi.remote.api.RemoteFAP.jmqiConnect(RemoteFAP.java:1389)
+                               : com.ibm.mq.ese.jmqi.InterceptedJmqiImpl.jmqiConnect(InterceptedJmqiImpl.java:377)
+                               : com.ibm.mq.ese.jmqi.ESEJMQI.jmqiConnect(ESEJMQI.java:562)
+                               : com.ibm.msg.client.wmq.internal.WMQConnection.<init>(WMQConnection.java:389)
+                               : com.ibm.msg.client.wmq.factories.WMQConnectionFactory.createV7ProviderConnection(WMQConnectionFactory.java:8683)
+                               : com.ibm.msg.client.wmq.factories.WMQConnectionFactory.createProviderConnection(WMQConnectionFactory.java:8023)
+                               : com.ibm.msg.client.jms.admin.JmsConnectionFactoryImpl._createConnection(JmsConnectionFactoryImpl.java:322)
+                               : com.ibm.msg.client.jms.admin.JmsConnectionFactoryImpl.createConnection(JmsConnectionFactoryImpl.java:242)
+                               : com.ibm.mq.jms.MQConnectionFactory.createCommonConnection(MQConnectionFactory.java:6026)
+                               : com.ibm.mq.jms.MQConnectionFactory.createConnection(MQConnectionFactory.java:6086)
+                               : Producer.setUp(Producer.java:63)
+                               : Producer.run(Producer.java:129)
+                               : Producer.main(Producer.java:145)
+
+                          Name : Reference Handler
+                      Priority : 10
+                   ThreadGroup : java.lang.ThreadGroup[name=system,maxpri=10]
+                            ID : 2
+                         State : RUNNABLE
+                         Stack : java.lang.ref.Reference.waitForReferencePendingList(Reference.java:-2)
+                               : java.lang.ref.Reference.processPendingReferences(Reference.java:241)
+                               : java.lang.ref.Reference$ReferenceHandler.run(Reference.java:213)
+
+                          Name : Notification Thread
+                      Priority : 9
+                   ThreadGroup : java.lang.ThreadGroup[name=system,maxpri=10]
+                            ID : 19
+                         State : RUNNABLE
+
+                          Name : Signal Dispatcher
+                      Priority : 9
+                   ThreadGroup : java.lang.ThreadGroup[name=system,maxpri=10]
+                            ID : 4
+                         State : RUNNABLE
+
+First Failure Symptom Report completed at Thu Sep 30 14:51:39 EDT 2021
+------------------------------------END FFST------------------------------------

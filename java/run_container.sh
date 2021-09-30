@@ -1,0 +1,1 @@
+docker run --rm --name java-ibmmq patrocinio/java-ibmmq:latest
