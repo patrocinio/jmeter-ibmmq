@@ -13,8 +13,6 @@ import  com.ibm.msg.client.jms.JmsFactoryFactory;
 import com.ibm.msg.client.wmq.WMQConstants;
 import com.ibm.msg.client.jms.JmsConnectionFactory;
 
-import org.patrocinio.ibmmq.MQProducer;
-
 class Producer {
 
     private static final String   HOST_NAME           = "secureqm-ibm-mq-qm-mq.patrocinio-684-dallas-ddd93d3a0fef01f6b396b69d343df410-0000.us-south.containers.appdomain.cloud";
@@ -22,6 +20,8 @@ class Producer {
     private static final String   CHANNEL_NAME        = "SECUREQMCHL";
     private static final String   QUEUE_MANAGER_NAME  = "SECUREQM";
     private static final String   QUEUE_NAME          = "EXAMPLE.QUEUE";
+
+    private static final  int DURATION = 60;
 
     private static final String TLS_KEYSTORE_PATH = "/Users/edu/github/jmeter-ibmmq/tests/ibmmq/clientkey.jks";
     private static final String TLS_KEYSTORE_PWD  = "password";
@@ -32,7 +32,7 @@ class Producer {
     private Destination         destination;
     private Session             sess;
     private MessageProducer     producer;
-    private MQProducer          mqProducer;
+    private CompletionListener  listener;
 
     private void setUp () {
         try {
@@ -77,6 +77,30 @@ class Producer {
 
     }
 
+    private void createListener() {
+        System.out.println ("Creating listener");
+        listener = new CompletionListener() {
+            @Override
+            public void onCompletion(Message msg) {
+                try {
+                    System.out.println(msg.getBody(String.class));
+                } catch (JMSException ex) {
+                    ex.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onException(Message msg, Exception e) {
+                try {
+                    System.out.println(msg.getBody(String.class));
+                } catch (JMSException ex) {
+                    ex.printStackTrace();
+                }
+            }
+        };
+    }
+
+
     private void createProducer() {
         System.out.println ("Creating producer");
         try {
@@ -88,17 +112,12 @@ class Producer {
         }
     }
 
-    private void createMQProducer() {
-        mqProducer = new MQProducer(producer);
-    }
-
     private void sendMessage() {
         final String payload = "My message";
         try {
             TextMessage msg = sess.createTextMessage(payload);
 
-            System.out.println ("Sending message");
-            mqProducer.send(msg);
+            producer.send(msg, listener);
         } catch (JMSException e) {
             e.printStackTrace();
         }
@@ -109,8 +128,17 @@ class Producer {
 
         setUp();
         createProducer();
-        createMQProducer();
-        sendMessage();
+        createListener();
+        long start = System.currentTimeMillis();
+        long count = 0;
+
+        System.out.println ("Sending message running for " + DURATION + " seconds");
+        while (System.currentTimeMillis() - start < 1000*DURATION) {
+            sendMessage();
+            count++;
+        }
+
+        System.out.println ("Count: " + count);
     }
 
     public static void main(String[] args) {

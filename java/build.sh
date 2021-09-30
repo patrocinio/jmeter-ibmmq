@@ -5,6 +5,6 @@ function compile {
 javac $1 -d output -cp $2
 }
 
-compile src/org/patrocinio/ibmmq/MQProducer.java $CLASSPATH
-compile src/Producer.java $CLASSPATH:$MQ_JARS/MQProducer.jar
+#compile src/org/patrocinio/ibmmq/MQProducer.java $CLASSPATH
+compile src/Producer.java $CLASSPATH
 
