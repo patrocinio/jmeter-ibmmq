@@ -1,0 +1,19 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: java-app
+spec:
+  template:
+    spec:
+      containers:
+      - name: java-app
+        image: patrocinio/java-ibmmq:latest
+        imagePullPolicy: Always
+        resources:
+          requests:
+            memory: 1Gi
+            cpu: 500m
+          limits:
+            memory: 2Gi
+            cpu: 4
+      restartPolicy: Never

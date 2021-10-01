@@ -1,0 +1,1 @@
+docker push patrocinio/java-ibmmq:latest

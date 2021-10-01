@@ -73,12 +73,19 @@
           <boolProp name="IfController.useExpression">true</boolProp>
         </IfController>
         <hashTree>
-          <JSR223Timer guiclass="TestBeanGUI" testclass="JSR223Timer" testname="JSR223 Timer - setUp" enabled="true">
-            <stringProp name="scriptLanguage">groovy</stringProp>
-            <stringProp name="parameters"></stringProp>
-            <stringProp name="filename"></stringProp>
-            <stringProp name="cacheKey">true</stringProp>
-            <stringProp name="script">import com.ibm.msg.client.jms.JmsConnectionFactory
+          <DebugSampler guiclass="TestBeanGUI" testclass="DebugSampler" testname="Debug Sampler - setUp" enabled="true">
+            <boolProp name="displayJMeterProperties">false</boolProp>
+            <boolProp name="displayJMeterVariables">true</boolProp>
+            <boolProp name="displaySystemProperties">false</boolProp>
+          </DebugSampler>
+          <hashTree/>
+        </hashTree>
+        <JSR223Sampler guiclass="TestBeanGUI" testclass="JSR223Sampler" testname="JSR223 Sampler - setUp" enabled="true">
+          <stringProp name="scriptLanguage">groovy</stringProp>
+          <stringProp name="parameters"></stringProp>
+          <stringProp name="filename"></stringProp>
+          <stringProp name="cacheKey">true</stringProp>
+          <stringProp name="script">import com.ibm.msg.client.jms.JmsConnectionFactory
 import com.ibm.msg.client.jms.JmsFactoryFactory
 import com.ibm.msg.client.wmq.WMQConstants
 
@@ -90,6 +97,8 @@ import javax.jms.JMSException
 
 
 log.info(&quot;#### Setup started&quot;)
+
+
 
 // 1
 def hostName         	= vars.get(&quot;hostName&quot;)
@@ -159,7 +168,6 @@ props.put(&quot;produced&quot;, &quot;0&quot;)
 props.put(&quot;consumed&quot;, &quot;0&quot;)
 
 
-// Define CompletionListener
 // Define CompetionListener
 def listener = new CompletionListener() {
                 @Override
@@ -186,15 +194,8 @@ System.getProperties().put(&quot;CompletionListener&quot;, listener)
 log.info(&quot;#### Start completed!&quot;)
 
 </stringProp>
-          </JSR223Timer>
-          <hashTree/>
-          <DebugSampler guiclass="TestBeanGUI" testclass="DebugSampler" testname="Debug Sampler - setUp" enabled="true">
-            <boolProp name="displayJMeterProperties">false</boolProp>
-            <boolProp name="displayJMeterVariables">true</boolProp>
-            <boolProp name="displaySystemProperties">false</boolProp>
-          </DebugSampler>
-          <hashTree/>
-        </hashTree>
+        </JSR223Sampler>
+        <hashTree/>
       </hashTree>
       <PostThreadGroup guiclass="PostThreadGroupGui" testclass="PostThreadGroup" testname="tearDown Thread Group - Close connections" enabled="true">
         <stringProp name="ThreadGroup.on_sample_error">continue</stringProp>
@@ -222,8 +223,10 @@ log.info (&quot;Thread #: &quot; + threadno)
 def producer = System.getProperties().get(&quot;Producer-&quot; + threadno)
 
 log.info (&quot;==&gt; Producer: &quot; + producer)
-producer.close()
-System.getProperties().remove(&quot;Producer-&quot; + threadno)
+if (producer != null) {
+	producer.close()
+	System.getProperties().remove(&quot;Producer-&quot; + threadno)
+}
 
 // Retrieve consumer
 def consumer = System.getProperties().get(&quot;Consumer-&quot; + threadno)
