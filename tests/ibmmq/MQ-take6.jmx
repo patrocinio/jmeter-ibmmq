@@ -10,7 +10,7 @@
         <collectionProp name="Arguments.arguments">
           <elementProp name="duration" elementType="Argument">
             <stringProp name="Argument.name">duration</stringProp>
-            <stringProp name="Argument.value">300</stringProp>
+            <stringProp name="Argument.value">60</stringProp>
             <stringProp name="Argument.metadata">=</stringProp>
           </elementProp>
           <elementProp name="setupDone" elementType="Argument">
@@ -124,7 +124,7 @@ cf.setStringProperty	(WMQConstants.WMQ_QUEUE_MANAGER, 		queueManagerName)
  * TLS Section
  */
  
-def tlsKeystorePath = &quot;tests/ibmmq/clientkey.jks&quot;;
+def tlsKeystorePath = &quot;clientkey.jks&quot;;
 def tlsKeystorePwd = &quot;password&quot;;
 
 //cf.setStringProperty(WMQConstants.WMQ_SSL_CIPHER_SUITE, cipherSuite)
