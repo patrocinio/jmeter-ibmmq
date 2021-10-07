@@ -95,7 +95,6 @@ import javax.jms.CompletionListener
 import javax.jms.Message
 import javax.jms.JMSException
 
-
 log.info(&quot;#### Setup started&quot;)
 
 
@@ -189,6 +188,12 @@ def listener = new CompletionListener() {
                 }
             }
 System.getProperties().put(&quot;CompletionListener&quot;, listener)
+
+// Define a message with 2K
+def str = &quot;x&quot;.repeat(1000)
+
+def msg = sess.createTextMessage(str)
+System.getProperties().put(&quot;Message&quot;, msg)
 
 
 log.info(&quot;#### Start completed!&quot;)
@@ -328,9 +333,6 @@ vars.put(&quot;stopDone&quot;, &quot;true&quot;)
           <stringProp name="parameters"></stringProp>
           <stringProp name="script">import java.time.Instant
 
-// Retrieve session
-def sess = System.getProperties().get(&quot;Session&quot;)
-
 def threadno = ctx.getThreadNum()
 log.info (&quot;Thread #: &quot; + threadno)
 
@@ -340,6 +342,9 @@ def producer = System.getProperties().get(&quot;Producer-&quot; + threadno)
 //log.info (&quot;==&gt; Producer: &quot; + producer)
 
 if (producer == null) {
+	// Retrieve session
+	def sess = System.getProperties().get(&quot;Session&quot;)
+
 	log.info (&quot;Defining Producer-&quot; + threadno)
 	def destination = System.getProperties().get(&quot;Destination&quot;)
 
@@ -353,12 +358,8 @@ if (producer == null) {
 // Retrieve listener
 def listener = System.getProperties().get(&quot;CompletionListener&quot;)
 
-// 3
-def rnd = new Random(System.currentTimeMillis())
-
-// 4
-def payload = String.format(&quot;JMeter...IBM MQ...test message no. %09d!&quot;, rnd.nextInt(Integer.MAX_VALUE))
-def msg = sess.createTextMessage(payload)
+// Retrieve message
+def msg = System.getProperties().get(&quot;Message&quot;)
 
 
 //def start = Instant.now()

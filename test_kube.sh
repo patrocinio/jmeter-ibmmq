@@ -15,7 +15,7 @@ mkdir -p ${R_DIR}
 
 /bin/rm -f ${T_DIR}/MQ.jtl ${T_DIR}/jmeter.log  > /dev/null 2>&1
 
-/entrypoint.sh -Dlog_level.jmeter=DEBUG \
+/entrypoint.sh -Dlog_level.jmeter=INFO \
 	-n -t ${T_DIR}/MQ.jmx -l ${T_DIR}/MQ.jtl -j ${T_DIR}/jmeter.log \
 	-e -o ${R_DIR}
 
