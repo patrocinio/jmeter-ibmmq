@@ -10,7 +10,7 @@
         <collectionProp name="Arguments.arguments">
           <elementProp name="duration" elementType="Argument">
             <stringProp name="Argument.name">duration</stringProp>
-            <stringProp name="Argument.value">300</stringProp>
+            <stringProp name="Argument.value">3</stringProp>
             <stringProp name="Argument.metadata">=</stringProp>
           </elementProp>
           <elementProp name="setupDone" elementType="Argument">
@@ -172,7 +172,7 @@ def listener = new CompletionListener() {
                 @Override
                 public void onCompletion(Message msg) {
                     try {
-                        System.out.println(msg.getBody(String.class));
+//                        System.out.println(msg.getBody(String.class));
                     } catch (JMSException ex) {
                         Logger.getLogger(MessageSenderAsync.class.getName()).log(Level.SEVERE, null, ex);
                     }
@@ -190,7 +190,10 @@ def listener = new CompletionListener() {
 System.getProperties().put(&quot;CompletionListener&quot;, listener)
 
 // Define a message with 2K
-def str = &quot;x&quot;.repeat(1000)
+def str = &quot;x&quot;
+for (int i = 0; i &lt; 10; i++) {
+	str += str
+}
 
 def msg = sess.createTextMessage(str)
 System.getProperties().put(&quot;Message&quot;, msg)
@@ -334,7 +337,7 @@ vars.put(&quot;stopDone&quot;, &quot;true&quot;)
           <stringProp name="script">import java.time.Instant
 
 def threadno = ctx.getThreadNum()
-log.info (&quot;Thread #: &quot; + threadno)
+//log.info (&quot;Thread #: &quot; + threadno)
 
 // Retrieve producer
 def producer = System.getProperties().get(&quot;Producer-&quot; + threadno)
@@ -385,7 +388,7 @@ log.info (&quot;Latency: &quot; + latency)
 //log.info(&quot;Updating produced&quot;)
 int produced = props.get(&quot;produced&quot;) as int 
 produced = produced + 1
-log.info (&quot;Produced: &quot; + produced)
+//log.info (&quot;Produced: &quot; + produced)
 props.put(&quot;produced&quot;, &quot;&quot; + produced)
 </stringProp>
           <stringProp name="scriptLanguage">groovy</stringProp>
@@ -471,17 +474,19 @@ if (msg != null) {
 					DateTimeFormatter.ofPattern(&quot;HHmmssSS&quot;))
 
 	// 7
-            def timestampDetail = String.format(&quot;#### Incoming message was placed in queue @ %s - %s&quot;, date, time)
-	log.info(timestampDetail)
+//     def timestampDetail = String.format(&quot;#### Incoming message was placed in queue @ %s - %s&quot;, date, time)
+//	log.info(timestampDetail)
 
 	// 8
-            SampleResult.setResponseData(msg.toString() + &quot;\n\n&quot; + timestampDetail)
+	/*
+     SampleResult.setResponseData(msg.toString() + &quot;\n\n&quot; + timestampDetail)
 	SampleResult.setDataType( org.apache.jmeter.samplers.SampleResult.TEXT )
 	SampleResult.setLatency( stop.toEpochMilli() - start.toEpochMilli() )
+	*/
 
 	int consumed = props.get(&quot;consumed&quot;) as int
 	consumed = consumed + 1
-	log.info (&quot;Consumed: &quot; + consumed)
+//	log.info (&quot;Consumed: &quot; + consumed)
 	props.put(&quot;consumed&quot;, &quot;&quot; + consumed)
 
 
