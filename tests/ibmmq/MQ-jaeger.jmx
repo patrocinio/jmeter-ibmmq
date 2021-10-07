@@ -48,6 +48,46 @@
             <stringProp name="Argument.value">SECUREQM</stringProp>
             <stringProp name="Argument.metadata">=</stringProp>
           </elementProp>
+          <elementProp name="tracer_host" elementType="Argument">
+            <stringProp name="Argument.name">tracer_host</stringProp>
+            <stringProp name="Argument.value">jaeger-all-in-one-inmemory-agent.jaeger-system</stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
+          </elementProp>
+          <elementProp name="tracer_port" elementType="Argument">
+            <stringProp name="Argument.name">tracer_port</stringProp>
+            <stringProp name="Argument.value">6831</stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
+          </elementProp>
+          <elementProp name="tracer_application_name" elementType="Argument">
+            <stringProp name="Argument.name">tracer_application_name</stringProp>
+            <stringProp name="Argument.value">jmeter-ibmmq</stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
+          </elementProp>
+          <elementProp name="tracer_sampler_type" elementType="Argument">
+            <stringProp name="Argument.name">tracer_sampler_type</stringProp>
+            <stringProp name="Argument.value">ratelimiting</stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
+          </elementProp>
+          <elementProp name="tracer_sampler_param" elementType="Argument">
+            <stringProp name="Argument.name">tracer_sampler_param</stringProp>
+            <stringProp name="Argument.value">2</stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
+          </elementProp>
+          <elementProp name="tracer_reporter_logspans" elementType="Argument">
+            <stringProp name="Argument.name">tracer_reporter_logspans</stringProp>
+            <stringProp name="Argument.value">true</stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
+          </elementProp>
+          <elementProp name="tracer_reporter_flush_interval" elementType="Argument">
+            <stringProp name="Argument.name">tracer_reporter_flush_interval</stringProp>
+            <stringProp name="Argument.value">1000</stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
+          </elementProp>
+          <elementProp name="tracer_reporter_max_queue" elementType="Argument">
+            <stringProp name="Argument.name">tracer_reporter_max_queue</stringProp>
+            <stringProp name="Argument.value">10000</stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
+          </elementProp>
         </collectionProp>
       </elementProp>
       <stringProp name="TestPlan.user_define_classpath"></stringProp>
@@ -80,7 +120,7 @@
           </DebugSampler>
           <hashTree/>
         </hashTree>
-        <JSR223Sampler guiclass="TestBeanGUI" testclass="JSR223Sampler" testname="JSR223 Sampler - setUp" enabled="true">
+        <JSR223Sampler guiclass="TestBeanGUI" testclass="JSR223Sampler" testname="JSR223 Sampler - setUp" enabled="false">
           <stringProp name="scriptLanguage">groovy</stringProp>
           <stringProp name="parameters"></stringProp>
           <stringProp name="filename"></stringProp>
@@ -196,6 +236,43 @@ log.info(&quot;#### Start completed!&quot;)
 </stringProp>
         </JSR223Sampler>
         <hashTree/>
+        <JSR223Sampler guiclass="TestBeanGUI" testclass="JSR223Sampler" testname="JSR223 Sampler - Tracer" enabled="true">
+          <stringProp name="scriptLanguage">groovy</stringProp>
+          <stringProp name="parameters"></stringProp>
+          <stringProp name="filename"></stringProp>
+          <stringProp name="cacheKey">true</stringProp>
+          <stringProp name="script">import io.opentracing.Tracer;
+import io.jaegertracing.Configuration;
+
+Tracer tracer() {
+    return Configuration.fromEnv()
+            .withSampler(
+                    io.jaegertracing.Configuration.SamplerConfiguration.fromEnv()
+                            .withType(vars.get(&quot;jaeger.tracer.type&quot;))
+                            .withParam(Integer.parseInt(vars.get(&quot;jaeger.tracer.param&quot;))))
+            .withReporter(
+                    io.jaegertracing.Configuration.ReporterConfiguration.fromEnv()
+                            .withLogSpans(Boolean.parseBoolean(vars.get(&quot;jaeger.reporter.logspans&quot;)))
+                            .withFlushInterval(Integer.parseInt(vars.get(&quot;jaeger.reporter.flushinterval&quot;)))
+                            .withMaxQueueSize(Integer.parseInt(vars.get(&quot;jaeger.reporter.maxqueuesize&quot;)))
+                            .withSender(
+                                    io.jaegertracing.Configuration.SenderConfiguration.fromEnv()
+                                            .withAgentHost(vars.get(&quot;jaeger.tracer.host&quot;))
+                                            .withAgentPort(Integer.parseInt(vars.get(&quot;jaeger.tracer.port&quot;)))
+                            )
+            )
+            .getTracer();
+  }
+
+def tracer = tracer()
+
+// Define tracer properties
+props.put(&quot;tracer&quot;, tracer)
+
+
+</stringProp>
+        </JSR223Sampler>
+        <hashTree/>
       </hashTree>
       <PostThreadGroup guiclass="PostThreadGroupGui" testclass="PostThreadGroup" testname="tearDown Thread Group - Close connections" enabled="true">
         <stringProp name="ThreadGroup.on_sample_error">continue</stringProp>
@@ -303,7 +380,7 @@ vars.put(&quot;stopDone&quot;, &quot;true&quot;)
           <hashTree/>
         </hashTree>
       </hashTree>
-      <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="Thread Group - Producer" enabled="true">
+      <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="Thread Group - Producer" enabled="false">
         <stringProp name="ThreadGroup.on_sample_error">stoptestnow</stringProp>
         <elementProp name="ThreadGroup.main_controller" elementType="LoopController" guiclass="LoopControlPanel" testclass="LoopController" testname="Loop Controller" enabled="true">
           <boolProp name="LoopController.continue_forever">false</boolProp>
@@ -391,7 +468,7 @@ props.put(&quot;produced&quot;, &quot;&quot; + produced)
         </JSR223Sampler>
         <hashTree/>
       </hashTree>
-      <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="Thread Group - Consumer" enabled="true">
+      <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="Thread Group - Consumer" enabled="false">
         <stringProp name="ThreadGroup.on_sample_error">stoptestnow</stringProp>
         <elementProp name="ThreadGroup.main_controller" elementType="LoopController" guiclass="LoopControlPanel" testclass="LoopController" testname="Loop Controller" enabled="true">
           <boolProp name="LoopController.continue_forever">false</boolProp>
